@@ -1,0 +1,11 @@
+@import "tailwindcss" source(none);
+@import "../styles/tokens.css";
+@source "./";
+@source "../components";
+
+@layer base {
+  html { color-scheme: dark; }
+  body { background: var(--color-canvas); color: var(--color-ink); }
+  ::selection { background: var(--color-accent); color: var(--color-canvas); }
+  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 5px; }
+}
