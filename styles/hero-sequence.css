@@ -1,0 +1,45 @@
+.sequence-hero { position: relative; --sequence-progress: 0; }
+.sequence-stage { position: relative; isolation: isolate; display: flex; flex-direction: column; justify-content: center; min-height: 100svh; background: var(--color-canvas); }
+.sequence-visual { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; }
+.sequence-poster, .sequence-canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 65% 50%; }
+.sequence-canvas { opacity: 0; }
+.sequence-canvas[data-ready="true"] { opacity: 1; }
+.sequence-content { position: relative; z-index: 2; padding: 2rem 0 2.5rem; }
+.sequence-title { font-size: clamp(2.75rem, 8vw, 5rem); line-height: 1; font-weight: 500; letter-spacing: -0.055em; }
+.sequence-summary { margin-top: 1.5rem; max-width: 32rem; color: var(--color-muted); font-size: 1rem; line-height: 1.7; }
+.sequence-shade { display: none; }
+.sequence-progress { position: absolute; z-index: 3; bottom: 0; left: 0; right: 0; height: 2px; background: var(--color-line); display: none; }
+.sequence-progress span { display: block; height: 100%; background: var(--color-accent); transform: scaleX(var(--sequence-progress)); transform-origin: left; }
+.sequence-scroll-hint { visibility: hidden; }
+
+@media (min-width: 1024px) {
+  /* Keep the 720p source composition compact instead of stretching it across large screens. */
+  .sequence-visual, .sequence-shade {
+    position: absolute;
+    inset: 0;
+    width: min(100%, 1280px, 142.222svh);
+    height: min(56.25vw, 720px, 80svh);
+    margin: auto;
+  }
+  .sequence-visual {
+    aspect-ratio: 16 / 9;
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent),
+      linear-gradient(180deg, transparent, #000 6%, #000 85%, transparent);
+    mask-composite: intersect;
+  }
+  .sequence-shade { display: block; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(90deg, rgb(17 18 16 / 97%) 0%, rgb(17 18 16 / 88%) 28%, rgb(17 18 16 / 45%) 52%, transparent 74%), linear-gradient(0deg, rgb(17 18 16 / 55%), transparent 30%); }
+  .sequence-title { max-width: 7ch; font-size: clamp(5rem, 8.5vw, 8.5rem); }
+  .sequence-summary { max-width: 24rem; font-size: 1.125rem; color: var(--color-ink); }
+  .sequence-content { padding: 4rem 0; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sequence-hero[data-enhanced="true"] { height: 340svh; }
+  .sequence-hero[data-enhanced="true"] .sequence-stage { position: sticky; top: 0; }
+  .sequence-hero[data-enhanced="true"] .sequence-progress { display: block; }
+  .sequence-hero[data-enhanced="true"] .sequence-scroll-hint { visibility: visible; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sequence-canvas { display: none; }
+}

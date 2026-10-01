@@ -10,13 +10,13 @@ Work only on `portfolio-v2`. Run `git branch --show-current` before significant 
 
 ## Stack & Organization
 
-The current foundation uses Next.js App Router, TypeScript, and Tailwind CSS. Do not add GSAP, Motion, Lenis, or Three.js during this phase. Add dependencies only for clear needs; defer icons until used.
+The current foundation uses Next.js App Router, TypeScript, and Tailwind CSS. The hero now uses native scroll and canvas animation; do not add GSAP, Motion, Lenis, or Three.js without a clear need. Add dependencies only for clear needs; defer icons until used.
 
 Separate routes in `app/`, components in `components/{layout,sections,motion,ui}/`, content and project data in `data/`, hooks in `hooks/`, utilities in `lib/`, assets in `public/`, and tokens/styles in `styles/`. Avoid one large page component.
 
 ## Development & Validation
 
-Inspect files, explain architecture, implement incrementally, run lint/build, fix errors, and summarize changes. Use Node.js 22+ and `npm ci`. No automated test suite or coverage requirement is established. Available scripts:
+Inspect files, explain architecture, implement incrementally, run lint/build, fix errors, and summarize changes. Use Node.js 22.18+ and `npm ci`. Run `npm test` for frame mapping and cache lifecycle checks; no coverage threshold is established. Available scripts:
 
 - `npm run dev`: local development.
 - `npm run lint`: lint checks.
@@ -32,7 +32,7 @@ Use two-space indentation, ESLint Next.js/TypeScript rules, and focused function
 
 Use near-black backgrounds, warm-white large typography, restrained borders, generous spacing, technical labels, and one accent. Avoid excessive glassmorphism, gradients, particles, cursor blobs, neon, and skill-percentage bars.
 
-Continuous scroll order: Hero, Intro, Selected Work, Experience, Capabilities, About, Recognition, Contact. Keep this phase static; no loader or detailed project sections.
+Continuous scroll order: Hero, Intro, Selected Work, Experience, Capabilities, About, Recognition, Contact. The Hero-to-Intro handoff and skills marquees are now implemented. Keep sections after Intro static; no blocking loader or detailed project sections. Preserve reduced-motion and no-JavaScript hero fallbacks.
 
 For future animation work, use CSS for basic transitions, Motion for component interactions, and GSAP/ScrollTrigger for cinematic sequences only when authorized. Give motion a purpose; respect `prefers-reduced-motion` and keep content accessible without animation. Use semantic HTML, sufficient contrast, keyboard support, and visible focus. Never globally disable outlines.
 

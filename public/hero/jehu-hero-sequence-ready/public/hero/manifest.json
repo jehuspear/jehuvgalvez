@@ -1,0 +1,69 @@
+{
+  "source": {
+    "frameCount": 73,
+    "width": 1280,
+    "height": 720,
+    "durationSeconds": null,
+    "note": "ZIP contains no video timing. User reports approximately 6 seconds. All source frames retained in order."
+  },
+  "desktop": {
+    "frameCount": 73,
+    "width": 1280,
+    "height": 720,
+    "pathPattern": "/hero/sequence/frame-{index:04d}.webp",
+    "firstIndex": 1,
+    "totalBytes": 4218202
+  },
+  "mobile": {
+    "frameCount": 37,
+    "width": 768,
+    "height": 432,
+    "pathPattern": "/hero/sequence-mobile/frame-{index:04d}.webp",
+    "firstIndex": 1,
+    "sourceFrameNumbers": [
+      1,
+      3,
+      5,
+      7,
+      9,
+      11,
+      13,
+      15,
+      17,
+      19,
+      21,
+      23,
+      25,
+      27,
+      29,
+      31,
+      33,
+      35,
+      37,
+      39,
+      41,
+      43,
+      45,
+      47,
+      49,
+      51,
+      53,
+      55,
+      57,
+      59,
+      61,
+      63,
+      65,
+      67,
+      69,
+      71,
+      73
+    ],
+    "totalBytes": 1182980
+  },
+  "posters": {
+    "initial": "/hero/poster-start.webp",
+    "professional": "/hero/poster-professional.webp",
+    "final": "/hero/poster-final.webp"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "source": {
+    "frameCount": 73,
+    "width": 1280,
+    "height": 720,
+    "durationSeconds": null,
+    "note": "ZIP contains no video timing. User reports approximately 6 seconds. All source frames retained in order."
+  },
+  "enhancement": {
+    "method": "Lanczos resize, fixed UnsharpMask radius=0.9 percent=65 threshold=3",
+    "note": "Upscaled derivative of 1280x720 originals; no generative reconstruction or new captured detail.",
+    "originalAssets": "../jehu-hero-sequence-ready/public/hero/"
+  },
+  "desktop": {
+    "frameCount": 73,
+    "width": 1920,
+    "height": 1080,
+    "pathPattern": "/sequence/frame-{index:04d}.webp",
+    "firstIndex": 1,
+    "totalBytes": 14654844
+  },
+  "mobile": {
+    "frameCount": 37,
+    "width": 1280,
+    "height": 720,
+    "pathPattern": "/sequence-mobile/frame-{index:04d}.webp",
+    "firstIndex": 1,
+    "sourceFrameNumbers": [
+      1,
+      3,
+      5,
+      7,
+      9,
+      11,
+      13,
+      15,
+      17,
+      19,
+      21,
+      23,
+      25,
+      27,
+      29,
+      31,
+      33,
+      35,
+      37,
+      39,
+      41,
+      43,
+      45,
+      47,
+      49,
+      51,
+      53,
+      55,
+      57,
+      59,
+      61,
+      63,
+      65,
+      67,
+      69,
+      71,
+      73
+    ],
+    "totalBytes": 3756332
+  },
+  "posters": {
+    "initial": "/poster-start.webp",
+    "professional": "/poster-professional.webp",
+    "final": "/poster-final.webp"
+  }
+}

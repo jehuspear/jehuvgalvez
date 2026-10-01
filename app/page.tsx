@@ -1,5 +1,4 @@
-import { Hero } from "@/components/sections/hero";
-import { Intro } from "@/components/sections/intro";
+import { HeroIntro } from "@/components/sections/hero-intro";
 import { SelectedWork } from "@/components/sections/selected-work";
 import { Experience } from "@/components/sections/experience";
 import { Capabilities } from "@/components/sections/capabilities";
@@ -10,8 +9,7 @@ import { Contact } from "@/components/sections/contact";
 export default function Home() {
   return (
     <main id="main-content" tabIndex={-1}>
-      <Hero />
-      <Intro />
+      <HeroIntro />
       <SelectedWork />
       <Experience />
       <Capabilities />
