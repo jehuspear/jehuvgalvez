@@ -9,7 +9,7 @@ body { font-family: var(--font-body), sans-serif; }
 .hero-story-steps, .sequence-scroll-hint, .sequence-content .page-container > p:first-child,
 .marquee-category, .skill-context-label, .skeleton-label,
 .fpa-number, .fpa-category, .fpa-panel-bar, .fpa-beat-label, .fpa-workflow-node,
-.fpa-tags, .fpa-case-placeholder > span:last-child, .remaining-projects li > span,
+.fpa-tags, .fpa-recognition-source, .remaining-projects li > span,
 .selected-work-heading > p, .section-label, .editorial-meta {
   font-family: var(--font-mono), monospace;
   font-variant-numeric: tabular-nums;

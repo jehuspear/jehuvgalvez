@@ -12,6 +12,11 @@ export const fpaProject = {
   workflow: ["Employee", "HR Certification", "Supervisor", "Final Approval"],
   video: `${base}/fpa-teaser.mp4`,
   poster: `${base}/fpa-poster.webp`,
+  recognition: {
+    label: "View FPA recognition",
+    url: "https://www.facebook.com/share/p/1CXjfhPa7G/",
+    source: "Facebook",
+  },
   finale: "From leave request to approval, official document generation, and leave-credit records.",
   beats: [
     { id: "intro", label: "The system", title: "A digital leave workflow.", copy: "A walkthrough of leave filing, document routing, and approval.", image: null, alt: null },

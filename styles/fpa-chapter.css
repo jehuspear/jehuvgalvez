@@ -40,9 +40,11 @@
 .fpa-tags li { padding: .375rem .625rem; border: 1px solid var(--color-line); font-size: .625rem; color: var(--color-muted); }
 .fpa-finale { margin-top: 1.5rem; }
 .fpa-finale > p:first-child { max-width: 33rem; font-size: .875rem; line-height: 1.7; }
-.fpa-case-placeholder { display: flex; align-items: baseline; gap: 1rem; margin-top: 1.25rem; font-size: .75rem; }
-.fpa-case-placeholder > span:first-child { color: var(--color-muted); border-bottom: 1px solid var(--color-line); padding-bottom: .25rem; }
-.fpa-case-placeholder > span:last-child { font-size: .6rem; color: var(--color-muted); }
+.fpa-recognition { display: flex; flex-wrap: wrap; align-items: center; gap: 0 1rem; margin-top: .375rem; font-size: .75rem; }
+.fpa-recognition a { display: inline-flex; align-items: center; gap: .375rem; min-height: 44px; color: var(--color-ink); text-decoration: underline; text-decoration-color: var(--color-line); text-underline-offset: .3em; }
+.fpa-recognition a:is(:hover, :focus-visible) { color: var(--color-accent); text-decoration-color: currentColor; }
+.fpa-recognition a svg { flex: none; }
+.fpa-recognition-source { font-size: .6rem; color: var(--color-muted); }
 .fpa-scroll-progress { display: none; }
 
 @media (min-width: 768px) { .fpa-stage { padding-left: 40px; padding-right: 40px; } }
@@ -68,7 +70,10 @@
   .fpa-chapter[data-enhanced="true"] .fpa-panel-bar { opacity: calc(1 - var(--fpa-quiet) * .6); }
   .fpa-chapter[data-enhanced="true"] .fpa-workflow-line > span { transform: scaleX(var(--fpa-workflow)); transform-origin: left; }
   .fpa-chapter[data-enhanced="true"] .fpa-details { grid-column: 1; grid-row: 2; }
-  .fpa-chapter[data-enhanced="true"] .fpa-finale { opacity: var(--fpa-finale); }
+  .fpa-chapter[data-enhanced="true"] .fpa-finale { opacity: var(--fpa-finale); pointer-events: none; }
+  .fpa-chapter[data-enhanced="true"][data-phase="3"] .fpa-finale { pointer-events: auto; }
+  /* Keyboard navigation reveals the final link even before the scroll finale. */
+  .fpa-chapter[data-enhanced="true"] .fpa-finale:focus-within { opacity: 1; pointer-events: auto; }
   .fpa-chapter[data-enhanced="true"] .fpa-scroll-progress { display: block; position: absolute; left: 40px; right: 40px; bottom: 0; height: 1px; background: var(--color-line); }
   .fpa-scroll-progress > span { display: block; height: 100%; background: var(--color-accent); transform: scaleX(var(--fpa-progress)); transform-origin: left; }
 }

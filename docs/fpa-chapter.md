@@ -36,7 +36,7 @@ The video source is assigned only within 600px and playback occurs only while th
 
 ## Accessible and responsive behavior
 
-Below 1024px, below 700px viewport height, when content does not fit the sticky stage, under reduced motion, or without JavaScript, the chapter stays in normal flow: title, teaser, tracking/workflow, CSC form, ledger, then details. Reduced motion has no scroll crossfades, scale, or autoplay; native video controls allow deliberate playback. The teaser is muted, looped, and plays inline. A poster remains while loading or after an error. Screenshots include useful alt text and no-JavaScript images. Paused autoplay is user-controlled; video is inert outside the teaser phase. View case study is explicitly Coming soon and does not link to a missing route.
+Below 1024px, below 700px viewport height, when content does not fit the sticky stage, under reduced motion, or without JavaScript, the chapter stays in normal flow: title, teaser, tracking/workflow, CSC form, ledger, then details. Reduced motion has no scroll crossfades, scale, or autoplay; native video controls allow deliberate playback. The teaser is muted, looped, and plays inline. A poster remains while loading or after an error. Screenshots include useful alt text and no-JavaScript images. Paused autoplay is user-controlled; video is inert outside the teaser phase. The final action links to the FPA recognition post supplied by Jehu on Facebook, opening in a new tab with an accessible announcement. Keyboard focus reveals the action even before the scroll finale; mobile, reduced-motion, and no-JavaScript layouts show it in normal flow. No case-study route or Facebook embed is added.
 
 ## Validation
 

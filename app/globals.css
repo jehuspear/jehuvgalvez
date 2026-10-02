@@ -6,6 +6,9 @@
 @import "../styles/persistent-ui.css";
 @import "../styles/skeleton.css";
 @import "../styles/editorial.css";
+@import "../styles/project-chapters.css";
+@import "../styles/portfolio-sections.css";
+@import "../styles/recognition.css";
 @source "./";
 @source "../components";
 

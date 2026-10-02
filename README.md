@@ -1,6 +1,6 @@
 # Jehu Galvez Portfolio V2
 
-Portfolio built with Next.js App Router, TypeScript, and Tailwind CSS. The hero uses a client-side canvas controller; its text and the remaining sections are server-rendered. No animation libraries or detailed case studies are included.
+Portfolio built with Next.js App Router, TypeScript, and Tailwind CSS. The hero uses a client-side canvas controller; its text and the remaining sections are server-rendered. No animation libraries or separate case-study routes are included.
 
 ## Development
 
@@ -18,7 +18,7 @@ Use Node.js 22.18+ and npm. Run `npm ci`, then `npm run dev` and open http://loc
 - `components/layout/`: progressive navigation, footer, and floating Resume control.
 - `components/sections/`: Hero, Intro, Selected Work, Experience, Capabilities, About, Recognition, Contact.
 - `components/ui/`: shared container and semantic section layout.
-- `data/`: typed content, project names, and verified FPA chapter data; no invented metrics or project details.
+- `data/`: typed, verified content for project chapters, career details, capabilities, and profile; no invented metrics or project details.
 - `styles/tokens.css`: shared colors and typography using Tailwind v4 CSS configuration.
 - `public/hero/jehu-hero-sequence-ready/`: supplied sequence and guides, preserved in place.
 - `components/motion/`, `hooks/`, `lib/`: hero/FPA media, scroll lifecycles, timeline mapping, and frame cache.
@@ -63,10 +63,16 @@ Selected Work and project data are unchanged. See `docs/intro-slice.md` for file
 
 `FpaTeaser` assigns the video source only near the chapter and pauses playback when offscreen, hidden, or outside the teaser phase. The approved `resources/fpa-portfolio/fpa-teaser-v3.mp4` is copied unchanged to `public/projects/fpa/fpa-teaser.mp4`. Screenshots load on proximity, with upcoming desktop phases requested ahead of their crossfades. Native controls and an explicit pause/play button are available.
 
-Mobile, reduced motion, short windows/high zoom, and no JavaScript use a normal stacked story. Reduced motion disables autoplay; the video remains available through native controls. Images have descriptive alt text and no-JavaScript fallbacks. Case-study UI is labeled Coming soon; no route is created. See `docs/fpa-chapter.md` for the file inventory and validation.
+Mobile, reduced motion, short windows/high zoom, and no JavaScript use a normal stacked story. Reduced motion disables autoplay; the video remains available through native controls. Images have descriptive alt text and no-JavaScript fallbacks. The final action links to the FPA Facebook recognition post supplied by Jehu; no case-study route is created. See `docs/fpa-chapter.md` for the file inventory and validation.
 
 ## Persistent navigation and Resume
 
 The fixed navigation progressively contracts during the Hero into a centered icon pill. Lucide React supplies the control icons; no animation library was added. IntersectionObserver tracks the eight sections, while one requestAnimationFrame scheduler updates morph and page-progress CSS variables. Mobile uses the compact navigation throughout. Reduced motion switches navigation states directly.
 
 The bottom-right Resume control expands on desktop hover or keyboard focus. Touch users tap to expose View Resume (PDF in a new tab) and Download. Native `<details>` keeps both actions usable without JavaScript. It uses a static cyan border, safe-area offsets, and no continuous animation. See `docs/persistent-ui.md` for behavior, validation, and the file inventory.
+
+## Remaining visual chapters
+
+iBaryo, AutoPet, and White House Cafe now have distinct conceptual visual chapters with resume-backed details. Experience is a scroll-driven desktop horizontal rail with readable stacked fallbacks. Capabilities uses native disclosure nodes, About features the formal portrait, Recognition includes the actual IoT award certificate from the supplied Drive folder, and Contact closes with the final Hero poster and email/resume actions.
+
+All new media is local and lazy-loaded; there is no new animation dependency. See `docs/portfolio-chapters.md` for content provenance, behavior, file inventory, and validation.

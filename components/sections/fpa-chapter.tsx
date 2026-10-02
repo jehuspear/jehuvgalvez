@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowUpRight } from "lucide-react";
 import { fpaProject } from "@/data/fpa-project";
 import { useFpaChapter } from "@/hooks/use-fpa-chapter";
 import { FpaScreenshot } from "@/components/motion/fpa-screenshot";
@@ -37,7 +38,17 @@ export function FpaChapter() {
 
         <footer className="fpa-details">
           <ul className="fpa-tags" aria-label="FPA technologies and practice">{fpaProject.technologies.map(tag => <li key={tag}>{tag}</li>)}</ul>
-          <div className="fpa-finale"><p>{fpaProject.finale}</p><p className="fpa-case-placeholder"><span>View case study <span aria-hidden="true">↗</span></span><span>Coming soon</span></p></div>
+          <div className="fpa-finale">
+            <p>{fpaProject.finale}</p>
+            <p className="fpa-recognition">
+              <a href={fpaProject.recognition.url} target="_blank" rel="noopener noreferrer">
+                <span>{fpaProject.recognition.label}</span>
+                <ArrowUpRight size={14} aria-hidden="true" />
+                <span className="sr-only"> on Facebook (opens in a new tab)</span>
+              </a>
+              <span className="fpa-recognition-source">{fpaProject.recognition.source}</span>
+            </p>
+          </div>
         </footer>
         <div className="fpa-scroll-progress" aria-hidden="true"><span /></div>
       </div>

@@ -19,9 +19,3 @@ export const capabilities = [
   "Full-stack web development", "Database design and development", "IT support and systems administration",
   "Networking and troubleshooting", "IoT and ESP32", "Workflow automation",
 ] as const;
-
-export const recognition = [
-  "TOPCIT: Level 3 Competent — May 2026",
-  "Oracle Cloud Infrastructure 2023 Certified Foundations Associate — August 2023",
-  "Best in IoT-Device Award, NU Fairview IT Exhibit — October 2025",
-] as const;
