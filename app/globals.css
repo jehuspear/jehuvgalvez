@@ -2,6 +2,8 @@
 @import "../styles/tokens.css";
 @import "../styles/hero-sequence.css";
 @import "../styles/intro.css";
+@import "../styles/fpa-chapter.css";
+@import "../styles/persistent-ui.css";
 @source "./";
 @source "../components";
 
@@ -10,4 +12,8 @@
   body { background: var(--color-canvas); color: var(--color-ink); }
   ::selection { background: var(--color-accent); color: var(--color-canvas); }
   :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 5px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
 }

@@ -1,19 +1,41 @@
-import { Container } from "@/components/ui/container";
+"use client";
+
+import { BriefcaseBusiness, FolderOpen, House, Mail, UserRound } from "lucide-react";
 import { navigation } from "@/data/navigation";
+import { usePortfolioNavigation } from "@/hooks/use-portfolio-navigation";
+
+const icons = { "selected-work": FolderOpen, experience: BriefcaseBusiness, about: UserRound, contact: Mail };
 
 export function SiteHeader() {
+  const { headerRef, active } = usePortfolioNavigation();
+
   return (
-    <header className="border-b border-line py-6">
-      <Container>
-        <div className="flex flex-wrap items-center justify-between gap-6">
-          <a href="#hero" className="font-semibold tracking-tight">Jehu Galvez<span className="text-accent">.</span></a>
-          <nav aria-label="Main navigation">
-            <ul className="flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted">
-              {navigation.map((item) => <li key={item.href}><a href={item.href} className="hover:text-ink">{item.label}</a></li>)}
-            </ul>
-          </nav>
-        </div>
-      </Container>
-    </header>
+    <>
+      <div className="site-header-space" aria-hidden="true" />
+      <header ref={headerRef} className="portfolio-header">
+        <nav aria-label="Main navigation" className="portfolio-nav">
+          <a href="#hero" className="nav-home nav-link" aria-label="Home, Jehu Galvez" aria-current={active === "hero" ? "location" : undefined}>
+            <span className="nav-identity" aria-hidden="true">JG<span>.</span><span className="nav-name">Jehu Galvez</span></span>
+            <House className="nav-icon" size={20} aria-hidden="true" />
+            <span className="nav-tooltip" aria-hidden="true">Home</span>
+          </a>
+          <ul className="nav-items">
+            {navigation.map(item => {
+              const Icon = icons[item.id];
+              return (
+                <li key={item.id}>
+                  <a href={item.href} className="nav-link" data-item={item.id} aria-label={item.accessibleLabel} aria-current={active === item.id ? "location" : undefined}>
+                    <span className="nav-label" aria-hidden="true">{item.label}</span>
+                    <Icon className="nav-icon" size={20} aria-hidden="true" />
+                    <span className="nav-tooltip" aria-hidden="true">{item.accessibleLabel}</span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+          <div className="nav-progress" aria-hidden="true"><span /></div>
+        </nav>
+      </header>
+    </>
   );
 }

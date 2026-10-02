@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { SiteHeader } from "@/components/layout/site-header";
+import { ResumeControl } from "@/components/layout/resume-control";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { profile } from "@/data/profile";
 import "./globals.css";
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <SiteHeader />
         {children}
         <SiteFooter />
+        <ResumeControl />
       </body>
     </html>
   );

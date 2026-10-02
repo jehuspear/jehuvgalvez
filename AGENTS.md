@@ -32,7 +32,7 @@ Use two-space indentation, ESLint Next.js/TypeScript rules, and focused function
 
 Use near-black backgrounds, warm-white large typography, restrained borders, generous spacing, technical labels, and one accent. Avoid excessive glassmorphism, gradients, particles, cursor blobs, neon, and skill-percentage bars.
 
-Continuous scroll order: Hero, Intro, Selected Work, Experience, Capabilities, About, Recognition, Contact. The Hero-to-Intro handoff and skills marquees are now implemented. Keep sections after Intro static; no blocking loader or detailed project sections. Preserve reduced-motion and no-JavaScript hero fallbacks.
+Continuous scroll order: Hero, Intro, Selected Work, Experience, Capabilities, About, Recognition, Contact. The Hero-to-Intro handoff and skills marquees are now implemented. The FPA chapter in Selected Work uses native scroll progress and sticky media. Keep other projects and later sections as foundations until requested; no blocking loader. Preserve reduced-motion and no-JavaScript hero fallbacks.
 
 For future animation work, use CSS for basic transitions, Motion for component interactions, and GSAP/ScrollTrigger for cinematic sequences only when authorized. Give motion a purpose; respect `prefers-reduced-motion` and keep content accessible without animation. Use semantic HTML, sufficient contrast, keyboard support, and visible focus. Never globally disable outlines.
 

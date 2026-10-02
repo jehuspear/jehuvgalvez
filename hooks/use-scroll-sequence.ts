@@ -70,7 +70,7 @@ export function useScrollSequence() {
       if (!initialAnchorHandled) {
         initialAnchorHandled = true;
         const anchor = document.getElementById(window.location.hash.slice(1));
-        if (anchor && anchor !== root) anchor.scrollIntoView();
+        if (anchor && anchor !== root) anchor.scrollIntoView({ behavior: "instant" });
       }
       if (!cache) {
         cache = new FrameSequenceCache({
