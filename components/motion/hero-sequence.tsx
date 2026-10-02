@@ -22,7 +22,7 @@ export function HeroSequence({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <section ref={rootRef} id="hero" aria-labelledby="hero-title" className="sequence-hero">
+    <section ref={rootRef} id="hero" aria-labelledby="hero-title" className="sequence-hero" data-phase="student">
       <div ref={stageRef} className="sequence-stage">
         <div className="sequence-visual" data-poster-state="loading" aria-hidden="true">
           <picture>

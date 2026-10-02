@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { heroPhaseAtFrame } from "@/lib/hero-phase";
 import { heroTimeline } from "@/lib/hero-timeline";
 import { frameUrl, heroSequence } from "@/data/hero-sequence";
 import { FrameSequenceCache, frameAtProgress } from "@/lib/frame-sequence";
@@ -37,6 +38,7 @@ export function useScrollSequence() {
     let displayed = -1;
     let failed = false;
     let disposed = false;
+    let layoutFallback = "";
 
     function schedule() {
       if (!raf && !disposed) raf = requestAnimationFrame(render);
@@ -47,6 +49,7 @@ export function useScrollSequence() {
       cache = undefined;
       displayed = -1;
       root!.dataset.enhanced = "false";
+      root!.dataset.phase = "student";
       delete root!.dataset.departed;
       if (scene) { scene.dataset.enhanced = "false"; scene.style.setProperty("--hero-handoff", "0"); }
       if (content) content.inert = false;
@@ -58,14 +61,25 @@ export function useScrollSequence() {
 
     function render() {
       raf = 0;
-      // At high zoom / short landscape heights, keep the full text in normal flow.
-      const fits = stage!.offsetHeight <= window.innerHeight + 2;
-      if (reduced.matches || failed || window.innerHeight < 600 || !fits) {
-        if (cache) reset();
+      // Measure the compact story, rather than its taller static three-beat fallback.
+      if (reduced.matches || failed || window.innerHeight < 600) {
+        layoutFallback = "";
+        if (cache || root!.dataset.enhanced === "true") reset();
         return;
       }
-      root!.dataset.enhanced = "true";
-      if (scene) scene.dataset.enhanced = "true";
+      const viewport = `${window.innerWidth}:${window.innerHeight}`;
+      // Retry overflow after a viewport change; avoid a ResizeObserver reset/re-enable loop.
+      if (layoutFallback === viewport) return;
+      if (root!.dataset.enhanced !== "true") {
+        root!.dataset.enhanced = "true";
+        if (scene) scene.dataset.enhanced = "true";
+      }
+      if (stage!.offsetHeight > window.innerHeight + 2) {
+        layoutFallback = viewport;
+        reset();
+        return;
+      }
+      layoutFallback = "";
       // Preserve deep links when progressive enhancement changes the height above them.
       if (!initialAnchorHandled) {
         initialAnchorHandled = true;
@@ -126,6 +140,8 @@ export function useScrollSequence() {
       cache.protect(displayed);
       canvas!.dataset.ready = "true";
       canvas!.dataset.frame = String(displayed + 1);
+      // Captions follow decoded pixels, not a requested frame that may still be loading.
+      root!.dataset.phase = heroPhaseAtFrame(sequence.sourceFrameIndices[displayed], heroSequence.phaseStartFrames);
     }
 
     const observer = new ResizeObserver(schedule);

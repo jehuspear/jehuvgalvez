@@ -1,65 +1,70 @@
-# Hero image-quality upgrade
+# Hero quality and narrative
 
-Implemented on `portfolio-v2`. The user selected consistent batch enhancement instead of AI redrawing.
+## Active source
 
-## Processing
+The active sequence is generated directly from the owner's `jehu-galvez-transition.mp4`: **1280×720, 24fps, 145 frames, 6.041667 seconds**. The video remains outside the public directory. `manifest.json` records its SHA-256, dimensions, timing, encoding settings, and source-frame indices.
 
-- Original 73-frame sequence: 1280x720. Originals are unchanged.
-- Desktop derivatives: 73 frames at 1920x1080; Lanczos scaling and fixed, light sharpening; WebP quality 92.
-- Mobile derivatives: 37 frames at 1280x720, sampled from the desktop originals rather than the old 768x432 files; WebP quality 90.
-- Three enhanced posters at 1920x1080, WebP quality 94.
-- Every output is reopened and decoded after encoding. Colors, composition, frame order, source mapping, and facial appearance are preserved through deterministic processing.
-- These are upscaled/enhanced assets, not native 1080p footage or recovered source detail.
+The previous workflow started with compressed extracted images and upscaled them. Fresh video decoding avoids that generation loss. Native detail remains limited to 720p; this does not create 1080p/4K detail or redraw Jehu's appearance. WebP encoding is high-quality **lossy**, rather than a lossless reproduction of decoded video pixels.
 
-## Rendering and memory
+## Assets and rendering
 
-The canvas uses high-quality scaling. Desktop no longer selects the lower-resolution set based on reported RAM or a 3G connection alone. Save-Data and 2G remain bandwidth-sensitive fallbacks. The window is now five nearby frames with six desktop/eight mobile cache entries, retaining the initial four-frame warmup and three-request concurrency limit. Desktop cache pixels occupy about 47.5 MiB, excluding in-flight decodes, canvas, and browser overhead.
+- Desktop: all **145** native 1280×720 frames, WebP quality 98, **38,064,500 bytes** for the complete set.
+- Smaller screens / Save-Data / 2G: **73** frames at 960×540, WebP quality 94, **9,034,832 bytes**. Every other source frame is sampled, including both endpoints.
+- Three posters copied from matching desktop outputs: source indices 0, 40, and 144.
+- New URLs under `public/hero/jehu-hero-sequence-native/` avoid reusing cached old assets. Both earlier asset sets remain unchanged as reference.
+- The centered desktop composition remains capped at 1280×720 CSS pixels and 80svh. Canvas backing pixels never exceed decoded frame dimensions. High-DPR displays cannot reveal detail absent from the source.
+- Arrival warms at most four frames; subsequent requests follow a five-frame sliding window. Three concurrent requests and six desktop/eight mobile cache entries remain. Decoded cache pixels occupy approximately 21.1 MiB desktop / 15.8 MiB mobile, excluding in-flight decoding, canvas, and browser overhead. The complete sequence is never preloaded on arrival.
 
-## Files
+Regenerate with `python scripts/extract-hero-video.py --source path/to/jehu-galvez-transition.mp4`. FFmpeg, FFprobe, and Pillow are offline generation requirements; no application dependency was added. The script validates the approved source dimensions/count and reopens every generated frame.
+
+## Phase introductions
+
+`data/hero-story.ts` separates factual copy from rendering. `HeroStory` renders all three beats in normal reading order. During enhancement, a reserved grid crossfades between visible paragraphs without shifting the CTA:
+
+1. **Student** — source frames 0–35: IT education and foundations.
+2. **Professional** — frames 36–95 (starting at 1.5s): development / IT support internships and the FPA leave workflow.
+3. **Human + AI** — frames 96–144 (starting at 4s): owner-confirmed AI tools and an explicitly creative vision.
+
+`heroPhaseAtFrame` receives the **actually painted source frame index**, not the requested scroll target. This keeps copy consistent during slow decoding and reverse scrolling, including the sparse mobile sequence. Screen readers receive all three descriptions without repeated live announcements. The final hold and existing Hero-to-Intro fade/blur remain unchanged.
+
+## Fallbacks
+
+Reduced motion, no JavaScript, unsupported canvas decoding, failed initial requests, short landscape windows, and overflowing high-zoom layouts show the three introductions as a readable static stack. Reduced motion requests no sequence and uses the professional poster. The fit safeguard measures the compact story first and retries overflow only after viewport changes to avoid observer loops. Existing skeleton/poster loading behavior remains.
+
+## File inventory
 
 Created:
-- `scripts/enhance-hero-frames.py`
-- `docs/hero-quality.md`
-- `public/hero/jehu-hero-sequence-hd/sequence/frame-0001.webp` through `frame-0073.webp` (73 files)
-- `public/hero/jehu-hero-sequence-hd/sequence-mobile/frame-0001.webp` through `frame-0037.webp` (37 files)
-- `public/hero/jehu-hero-sequence-hd/poster-start.webp`
-- `public/hero/jehu-hero-sequence-hd/poster-professional.webp`
-- `public/hero/jehu-hero-sequence-hd/poster-final.webp`
-- `public/hero/jehu-hero-sequence-hd/manifest.json`
-- `public/hero/jehu-hero-sequence-hd/README.md`
+- `components/sections/hero-story.tsx`
+- `data/hero-story.ts`
+- `lib/hero-phase.ts`
+- `tests/hero-phase.test.mjs`
+- `scripts/extract-hero-video.py`
+- `public/hero/jehu-hero-sequence-native/sequence/frame-0001.webp` through `frame-0145.webp` (145 files)
+- `public/hero/jehu-hero-sequence-native/sequence-mobile/frame-0001.webp` through `frame-0073.webp` (73 files)
+- `public/hero/jehu-hero-sequence-native/poster-{start,professional,final}.webp` (3 files)
+- `public/hero/jehu-hero-sequence-native/{manifest.json,README.md}` (2 files)
 
 Changed:
+- `components/sections/hero.tsx`
 - `components/motion/hero-sequence.tsx`
 - `data/hero-sequence.ts`
 - `hooks/use-scroll-sequence.ts`
-- `lib/frame-sequence.ts`
-- `tests/frame-sequence.test.mjs`
+- `styles/hero-sequence.css`
 - `README.md`
+- `docs/hero-animation.md`
+- `docs/hero-quality.md`
 
-No originals removed or overwritten; no dependencies added; no commits or deployment.
+No files removed. Intro styles, FPA chapter, navigation, Resume control, profile, and skills data remain unchanged. No commits or deployment performed.
 
-## Transfer size
-
-Desktop total: 14,654,844 bytes. Mobile total: 3,756,332 bytes. Only nearby frames are requested; neither set downloads in full on arrival.
 
 ## Validation
 
-- All 113 enhanced frames/posters reopened and decoded successfully after encoding.
-- npm test: all three frame/cache tests passed after reducing the loading window.
-- npm run lint: passed with zero warnings.
-- npm run build: passed, including TypeScript and static prerendering.
-- Production browser checks passed at desktop and mobile widths, including a 3x mobile canvas (1170 physical pixels for a 390px viewport).
-- Confirmed requests use the enhanced directory and high-quality canvas smoothing.
-- First/middle/final/reverse frames, initial four-frame request limit, fixed frame set across resize, no overflow, skip link, delayed-frame retention, Save-Data, reduced motion, no JavaScript, and failed-load fallbacks all passed.
-- Representative raw frames and production screenshots visually reviewed. No new generative detail was introduced.
-- git diff --check: passed.
+- `npm test`: all nine tests passed, including source-phase boundaries and responsive timing.
+- `npm run typecheck`, `npm run lint`, and `npm run build`: passed.
+- All 223 installed asset files match generated hashes; all 221 WebP files decoded successfully. The raw source video hash is unchanged.
+- Production Chromium checks passed at 1024×768, 1440×900, 1920×1080 (2× DPR), 2560×1440, and 390×844 (3× DPR): three phases, endpoints, reverse scrolling, bounded four-frame arrival, native raster caps, no overflow, CTA fit, and Intro navigation.
+- Delayed future frames preserve the previous matching caption; live reduced-motion changes reveal the full static story and can restore animation.
+- Reduced motion, no JavaScript, short landscape, overflowing windows, and failed initial-frame requests use readable static fallbacks. No browser exceptions were reported.
+- Protected Intro, FPA, navigation, Resume, profile, and skills file hashes are unchanged. `git diff --check` passed.
 
-## Desktop display sizing
-
-The desktop hero now displays the existing HD frames inside a centered 16:9 area capped at 1280 x 720 CSS pixels and 80svh. This reduces visible enlargement of the original 720p detail on large monitors. Subtle edge masks blend the smaller composition into the page; the text shade uses the same bounds. The full-height stage, scroll timing, mobile layout, and Intro handoff remain in place.
-
-Canvas backing pixels use untransformed layout dimensions and never exceed the decoded frame dimensions. This avoids resizing the canvas throughout the handoff scale effect or allocating oversized rasters on high-DPR screens. The deliberate blur during the Hero-to-Intro handoff remains.
-
-Files changed for this adjustment: `styles/hero-sequence.css`, `hooks/use-scroll-sequence.ts`, and this document. No image assets were recompressed, created, or removed.
-
-Desktop sizing validation: all five automated tests, lint, and the production build passed. Chromium checks passed at 1024x768, 1440x900, 1920x1080 (2x DPR), 2560x1440, 3840x2160, and 390x844 (3x DPR). Verified display/raster caps, aligned shade, first/middle/final/reverse playback, a stable raster through the final-frame hold, Intro navigation, no overflow, bounded initial loading, Save-Data, reduced motion, no JavaScript, and zero browser exceptions. Selected Work and project-data hashes are unchanged. Checks used emulated viewports, not physical devices.
+Browser checks used emulated viewports in desktop Chromium; physical-device/Safari and field Core Web Vitals remain unmeasured.

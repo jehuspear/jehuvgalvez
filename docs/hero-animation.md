@@ -1,5 +1,7 @@
 # Hero scroll animation
 
+This documents the initial controller. The active native-video assets and phase introductions supersede the original frame counts; see [Hero quality and narrative](hero-quality.md).
+
 Implemented on `portfolio-v2` using the supplied asset pack. No dependencies added, no asset edits, no main-branch changes.
 
 ## Created

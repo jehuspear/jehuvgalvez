@@ -41,17 +41,13 @@ Tooling note: ESLint is pinned to 9.39.5 because the React plugin bundled by esl
 
 ## Scroll-controlled hero
 
-Originals remain under `public/hero/jehu-hero-sequence-ready/public/hero/`. The active enhanced set is `public/hero/jehu-hero-sequence-hd/`, whose manifest is read by `data/hero-sequence.ts`. Desktop derivatives are 1920x1080; mobile frames are 1280x720, regenerated from the desktop originals. Fixed Lanczos resizing and light sharpening improve display quality without redrawing faces or backgrounds. Upscaling does not recover original detail. Desktop uses 73 frames; smaller screens, Save-Data, and 2G connections use 37. Wide-screen devices otherwise retain the higher-resolution set, independent of reported device memory. The selected set stays fixed during a mount, including resizing.
+Originals remain under `public/hero/jehu-hero-sequence-ready/public/hero/`; the previous upscaled set is also retained as reference. The active set is `public/hero/jehu-hero-sequence-native/`, regenerated directly from the owner's raw video. Desktop uses all 145 native 1280×720 source frames, WebP quality 98. Smaller screens, Save-Data, and 2G use 73 sampled 960×540 frames, WebP quality 94. This avoids the old extracted-image compression and upscaling; source detail remains limited to 720p. The selected set stays fixed during a mount.
 
-CSS sticky positioning and requestAnimationFrame map scroll progress directly to frames. Arrival loads at most four frames with three concurrent requests; scrolling loads a nearby window on demand. The cache holds at most 6 desktop / 8 mobile bitmaps, plus at most three in-flight decodes. Eviction and unmount close ImageBitmaps. The previous frame remains visible during loading. Nothing waits for the whole sequence.
+The centered desktop 16:9 composition remains capped at 1280×720 CSS pixels and 80svh. High-quality canvas scaling never allocates backing pixels beyond the source dimensions. Arrival warms four frames; a five-frame nearby window, three-request concurrency limit, and bounded bitmap cache keep the rest demand-loaded. Abort/cancel/evict behavior and skeleton/poster fallbacks remain in place.
 
-Mobile keeps a full 16:9 composition above the text. Short viewports and high zoom use normal document flow when the stage cannot fit. Reduced motion, no JavaScript, unsupported decoding, or repeated initial frame failures retain an accessible poster and text. Skip to intro bypasses the experience.
+`HeroStory` adds Student → Professional → Human + AI introductions. Captions follow the actually displayed source frame, including sparse mobile sampling, delayed decoding, and reverse scrolling. Copy uses verified education, internships, and owner-confirmed AI tools; the final transformation is a creative vision. Reduced motion and no JavaScript show all three descriptions in normal flow, with a static poster and no sequence requests.
 
-Set `NEXT_PUBLIC_BASE_PATH=/subdirectory` at build time only when deploying under a subdirectory; Next.js and sequence URLs share this value. Default: domain root. See `docs/hero-animation.md` for the change inventory and validation.
-
-API references: [ImageBitmap cleanup](https://developer.mozilla.org/en-US/docs/Web/API/ImageBitmap/close) and [reduced motion](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/%40media/prefers-reduced-motion).
-
-Regenerate the enhanced sequence with `python scripts/enhance-hero-frames.py` (Pillow required only for regeneration). Web rendering enables high-quality image smoothing. The smaller nearby-frame window keeps the larger desktop images within a bounded decoded-memory budget. See `docs/hero-quality.md` for source provenance and validation.
+Regenerate with `python scripts/extract-hero-video.py --source path/to/jehu-galvez-transition.mp4` (FFmpeg/FFprobe and Pillow required only for generation). See `docs/hero-quality.md` for provenance, phase timing, transfer sizes, file inventory, and validation.
 
 ## Hero to Intro / skills slice
 

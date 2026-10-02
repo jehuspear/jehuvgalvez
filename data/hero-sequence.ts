@@ -1,9 +1,10 @@
-import manifest from "@/public/hero/jehu-hero-sequence-hd/manifest.json";
+import manifest from "@/public/hero/jehu-hero-sequence-native/manifest.json";
 
-// Enhanced derivatives; the supplied source asset pack remains unchanged.
-const base = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/hero/jehu-hero-sequence-hd`;
+// Direct video derivatives; original and upscaled reference sets remain unchanged.
+const base = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/hero/jehu-hero-sequence-native`;
 
 export const heroSequence = {
+  phaseStartFrames: manifest.phaseStartFrames,
   desktop: manifest.desktop,
   mobile: manifest.mobile,
   poster: `${base}${manifest.posters.initial}`,

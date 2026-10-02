@@ -13,7 +13,7 @@
 .sequence-scroll-hint { visibility: hidden; }
 
 @media (min-width: 1024px) {
-  /* Keep the 720p source composition compact instead of stretching it across large screens. */
+  /* Keep native 720p detail within its source-sized composition on large screens. */
   .sequence-visual, .sequence-shade {
     position: absolute;
     inset: 0;
@@ -42,4 +42,29 @@
 
 @media (prefers-reduced-motion: reduce) {
   .sequence-canvas { display: none; }
+}
+
+
+/* Native-source narrative: normal reading order without animation, one beat while enhanced. */
+.hero-story { margin-top: 1.5rem; max-width: 32rem; }
+.hero-story-steps { display: flex; flex-wrap: wrap; gap: .6rem 1.1rem; margin-bottom: 1rem; color: var(--color-muted); font-size: .625rem; letter-spacing: .08em; text-transform: uppercase; }
+.hero-story-steps li { padding-bottom: .5rem; border-bottom: 1px solid var(--color-line); }
+.hero-story-steps span { margin-right: .25rem; opacity: .65; }
+.hero-story-panels { display: grid; gap: 1.25rem; }
+.hero-story-panel h2 { font-size: 1.125rem; font-weight: 500; line-height: 1.4; letter-spacing: -.02em; }
+.hero-story-panel p { margin-top: .5rem; color: var(--color-muted); font-size: .9375rem; line-height: 1.65; }
+@media (min-width: 1024px) {
+  .hero-story { max-width: 24rem; }
+  .hero-story-panel h2 { font-size: 1.25rem; }
+  .hero-story-panel p { font-size: 1rem; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .sequence-hero[data-enhanced="true"] .hero-story-panels { gap: 0; }
+  .sequence-hero[data-enhanced="true"] .hero-story-panel { grid-area: 1 / 1; opacity: 0; pointer-events: none; transition: opacity 180ms ease; }
+  .sequence-hero[data-enhanced="true"][data-phase="student"] [data-story="student"],
+  .sequence-hero[data-enhanced="true"][data-phase="professional"] [data-story="professional"],
+  .sequence-hero[data-enhanced="true"][data-phase="human-ai"] [data-story="human-ai"] { opacity: 1; }
+  .sequence-hero[data-enhanced="true"][data-phase="student"] .hero-story-steps [data-story="student"],
+  .sequence-hero[data-enhanced="true"][data-phase="professional"] .hero-story-steps [data-story="professional"],
+  .sequence-hero[data-enhanced="true"][data-phase="human-ai"] .hero-story-steps [data-story="human-ai"] { color: var(--color-accent); border-color: var(--color-accent); }
 }
