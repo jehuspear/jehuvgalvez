@@ -1,11 +1,12 @@
 // Education/internships: data/profile.ts. AI tools: owner-supplied data/skills.ts.
+// Cloud computing learning: confirmed directly by the owner.
 // The final portrait is an artistic metaphor, not a qualification or job claim.
 export const heroStory = [
   {
     id: "student",
     label: "Student",
     title: "Learning the foundations.",
-    description: "An IT education in Mobile and Internet Technology, with a foundation in software, databases, networking, and IoT.",
+    description: "Bachelor of Science in Information Technology graduate with a specialization in Mobile and Internet Technology. Foundations in software, databases, networking, and IoT, with ongoing learning in cloud computing.",
   },
   {
     id: "professional",
