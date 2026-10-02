@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { SectionLabel } from "@/components/ui/section-label";
 import { Container } from "@/components/ui/container";
 import { SkillsMarquees } from "@/components/sections/skills-marquees";
 import { heroSequence } from "@/data/hero-sequence";
@@ -16,7 +17,7 @@ export function Intro() {
       </div>
       <div className="intro-copy">
         <Container>
-          <p className="intro-eyebrow">02 / The technology behind the builder</p>
+          <SectionLabel label="The technology behind the builder" divider={false} />
           <h2 id="intro-title">I work across the<br /><span>layers of technology.</span></h2>
           <p className="intro-description">From interfaces and databases to infrastructure, networking and connected hardware, I build systems around real operational needs.</p>
         </Container>

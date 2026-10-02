@@ -1,16 +1,33 @@
 import type { ReactNode } from "react";
 import { Container } from "@/components/ui/container";
+import { SectionLabel } from "@/components/ui/section-label";
+import { SectionReveal } from "@/components/motion/section-reveal";
 
-type SectionProps = { id: string; title: string; children: ReactNode };
+type SectionProps = {
+  id: string;
+  title: string;
+  children: ReactNode;
+  index?: string;
+  label?: string;
+  intro?: string;
+  divider?: boolean;
+  layout?: "split" | "stacked";
+};
 
-export function Section({ id, title, children }: SectionProps) {
+export function Section({ id, title, children, index, label = title, intro, divider = true, layout = "split" }: SectionProps) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-6 border-t border-line py-16 sm:py-24">
+    <section id={id} aria-labelledby={`${id}-title`} className="editorial-section" data-layout={layout}>
       <Container>
-        <div className="grid gap-8 md:grid-cols-[1fr_2fr] md:gap-16">
-          <h2 id={`${id}-title`} className="text-2xl font-medium tracking-tight">{title}</h2>
-          <div className="min-w-0 text-base leading-relaxed text-muted">{children}</div>
-        </div>
+        <SectionReveal>
+          <SectionLabel index={index} label={label} divider={divider} />
+          <div className="editorial-grid">
+            <header>
+              <h2 id={`${id}-title`} className="editorial-heading">{title}</h2>
+              {intro && <p className="editorial-intro">{intro}</p>}
+            </header>
+            <div className="editorial-content">{children}</div>
+          </div>
+        </SectionReveal>
       </Container>
     </section>
   );

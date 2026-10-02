@@ -5,6 +5,7 @@
 @import "../styles/fpa-chapter.css";
 @import "../styles/persistent-ui.css";
 @import "../styles/skeleton.css";
+@import "../styles/editorial.css";
 @source "./";
 @source "../components";
 

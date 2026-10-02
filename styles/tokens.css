@@ -1,9 +1,63 @@
 @theme {
   --color-canvas: #111210;
+  --color-canvas-elevated: #151612;
   --color-surface: #191b17;
+  --color-surface-soft: #1c1e18;
   --color-ink: #f3f0e7;
   --color-muted: #b1b4a9;
+  --color-dim: #8a8e81;
   --color-line: #383c33;
+  --color-line-strong: #626858;
   --color-accent: #c4db95;
-  --font-sans: Arial, Helvetica, sans-serif;
+  --color-accent-soft: rgb(196 219 149 / 8%);
+  --color-accent-muted: #a3ba78;
+}
+
+/* Resolve the next/font variable on the element that actually uses the utility. */
+@theme inline {
+  --font-sans: var(--font-body);
+}
+
+:root {
+  --text-xs: clamp(.7rem, .68rem + .1vw, .78rem);
+  --text-sm: clamp(.82rem, .78rem + .15vw, .92rem);
+  --text-body: clamp(1rem, .96rem + .15vw, 1.08rem);
+  --text-lead: clamp(1.15rem, 1.02rem + .45vw, 1.45rem);
+  --text-h4: clamp(1.125rem, 1rem + .4vw, 1.5rem);
+  --text-h3: clamp(1.7rem, 1.3rem + 1vw, 2.6rem);
+  --text-h2: clamp(2.5rem, 1.7rem + 2.4vw, 5rem);
+  --text-display: clamp(3.5rem, 2rem + 5vw, 8rem);
+  /* Available for future compositions; existing Hero sizes remain bespoke. */
+  --text-hero: clamp(4rem, 2.5rem + 6vw, 9rem);
+
+  --space-1: .25rem;
+  --space-2: .5rem;
+  --space-3: .75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-section: clamp(6rem, 10vw, 10rem);
+  --space-section-large: clamp(8rem, 14vw, 14rem);
+
+  --content-max: 75rem;
+  --content-wide: 96rem;
+  --copy-max: 60ch;
+  --page-gutter: clamp(1.5rem, 3vw, 3rem);
+  --section-gap: clamp(2rem, 5vw, 5rem);
+  --border-subtle: 1px solid var(--color-line);
+  --border-strong: 1px solid var(--color-line-strong);
+  --radius-sm: .5rem;
+  --radius-md: .75rem;
+  --radius-lg: 1rem;
+
+  --duration-fast: 160ms;
+  --duration-base: 280ms;
+  --duration-slow: 600ms;
+  --duration-section: 900ms;
+  --ease-standard: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --ease-expo: cubic-bezier(.19, 1, .22, 1);
+  --reveal-distance: 20px;
 }
