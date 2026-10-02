@@ -18,6 +18,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-accent focus:p-4 focus:text-canvas">
           Skip to content
         </a>
+        <noscript><style>{".media-skeleton, .hero-loading-status { display: none; }"}</style></noscript>
         <SiteHeader />
         {children}
         <SiteFooter />
