@@ -5,6 +5,8 @@ import { portfolioSections, sectionNavigation } from "@/data/navigation";
 
 export function usePortfolioNavigation() {
   const headerRef = useRef<HTMLElement>(null);
+  const [mobileMinimized, setMobileMinimized] = useState(false);
+  const minimizedRef = useRef(false);
   const [active, setActive] = useState<string>("hero");
 
   useEffect(() => {
@@ -17,6 +19,9 @@ export function usePortfolioNavigation() {
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
     const mobile = matchMedia("(max-width: 639px)");
     const intersecting = new Set<string>();
+    let lastY = window.scrollY;
+    let direction = 0;
+    let directionStart = lastY;
     let raf = 0;
     let measure = true;
     let heroTop = 0;
@@ -39,7 +44,26 @@ export function usePortfolioNavigation() {
     function resize() { measure = true; schedule(); }
     function render() {
       raf = 0;
-      const y = window.scrollY;
+      const y = Math.max(0, window.scrollY);
+      const delta = y - lastY;
+      const nextDirection = Math.sign(delta);
+      if (nextDirection && nextDirection !== direction) {
+        direction = nextDirection;
+        directionStart = lastY;
+      }
+      const travel = Math.abs(y - directionStart);
+      const focused = document.activeElement;
+      const keyboardWithin = !!focused && header!.contains(focused) && focused.matches(":focus-visible");
+      const shouldMinimize = mobile.matches && y > 80 && direction > 0 && travel >= 20 && !keyboardWithin;
+      const shouldExpand = !mobile.matches || y <= 24 || (direction < 0 && travel >= 16);
+      if (shouldMinimize && !minimizedRef.current) {
+        minimizedRef.current = true;
+        setMobileMinimized(true);
+      } else if (shouldExpand && minimizedRef.current) {
+        minimizedRef.current = false;
+        setMobileMinimized(false);
+      }
+      lastY = y;
       // Read geometry only after resize/content changes, before any style writes.
       if (measure) {
         measure = false;
@@ -99,5 +123,5 @@ export function usePortfolioNavigation() {
     };
   }, []);
 
-  return { headerRef, active };
+  return { headerRef, active, mobileMinimized };
 }

@@ -7,13 +7,13 @@ import { usePortfolioNavigation } from "@/hooks/use-portfolio-navigation";
 const icons = { "selected-work": FolderOpen, experience: BriefcaseBusiness, about: UserRound, contact: Mail };
 
 export function SiteHeader() {
-  const { headerRef, active } = usePortfolioNavigation();
+  const { headerRef, active, mobileMinimized } = usePortfolioNavigation();
 
   return (
     <>
       <div className="site-header-space" aria-hidden="true" />
-      <header ref={headerRef} className="portfolio-header">
-        <nav aria-label="Main navigation" className="portfolio-nav">
+      <header ref={headerRef} className="portfolio-header" data-mobile-minimized={mobileMinimized}>
+        <nav id="portfolio-navigation" aria-label="Main navigation" className="portfolio-nav">
           <a href="#hero" className="nav-home nav-link" aria-label="Home, Jehu Galvez" aria-current={active === "hero" ? "location" : undefined}>
             <span className="nav-identity" aria-hidden="true">JG<span>.</span><span className="nav-name">Jehu Galvez</span></span>
             <House className="nav-icon" size={20} aria-hidden="true" />

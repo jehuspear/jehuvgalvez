@@ -112,7 +112,14 @@ main[id], main section[id] { scroll-margin-top: calc(96px + env(safe-area-inset-
 @media (prefers-reduced-motion: no-preference) { .resume-control[open] .resume-actions { animation: resume-reveal 260ms ease both; } }
 
 @media (max-width: 639px) {
-  .site-header-space { height: 117px; }
+  .site-header-space { height: 0; }
+  /* Keep the sticky Hero image below the expanded navigation, including its no-JS fallback. */
+  .sequence-stage { padding-top: calc(80px + env(safe-area-inset-top, 0px)); }
+  .portfolio-header[data-mobile-minimized="true"] { width: 248px; top: calc(8px + env(safe-area-inset-top, 0px)); }
+  .portfolio-header[data-mobile-minimized="true"] .portfolio-nav { height: 48px; padding-inline: 8px; gap: 0; }
+  .portfolio-header[data-mobile-minimized="true"] .nav-items { gap: 0; }
+  .portfolio-header[data-mobile-minimized="true"] .nav-icon { width: 18px; height: 18px; }
+  .portfolio-header[data-mobile-minimized="true"] .nav-progress { left: 18px; right: 18px; }
   .portfolio-header { --nav-morph: 1; top: calc(12px + env(safe-area-inset-top, 0px)); width: 272px; max-width: calc(100vw - 32px); }
   .portfolio-nav { gap: 2px; }
   .nav-items { gap: 2px; }
@@ -123,6 +130,13 @@ main[id], main section[id] { scroll-margin-top: calc(96px + env(safe-area-inset-
   .resume-actions { inset: auto -1px calc(100% + 12px) auto; flex-direction: column; align-items: stretch; width: 244px; padding: 8px; border: 1px solid rgb(139 213 238 / 50%); border-radius: 14px; background: #111618; box-shadow: 0 8px 24px rgb(0 0 0 / 25%); }
   .resume-actions a { justify-content: space-between; padding: 0 12px; }
   .resume-actions a + a { border-left: 0; border-top: 1px solid rgb(139 213 238 / 20%); border-radius: 0 0 10px 10px; }
+}
+@media (max-width: 639px) and (prefers-reduced-motion: no-preference) {
+  .portfolio-header { transition: width 260ms cubic-bezier(.22, 1, .36, 1), top 260ms cubic-bezier(.22, 1, .36, 1); }
+  .portfolio-nav { transition: height 260ms ease, padding 260ms ease, gap 260ms ease; }
+  .nav-items { transition: gap 260ms ease; }
+  .nav-icon { transition: width 260ms ease, height 260ms ease; }
+  .nav-progress { transition: left 260ms ease, right 260ms ease; }
 }
 @media (prefers-reduced-motion: reduce) {
   .portfolio-nav, .nav-link, .nav-label, .nav-icon, .nav-tooltip, .resume-control, .resume-actions { transition: none; animation: none; }
