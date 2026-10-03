@@ -1,6 +1,7 @@
 @import "tailwindcss" source(none);
 @import "../styles/tokens.css";
 @import "../styles/hero-sequence.css";
+@import "../styles/hero-journey.css";
 @import "../styles/intro.css";
 @import "../styles/fpa-chapter.css";
 @import "../styles/persistent-ui.css";

@@ -1,0 +1,49 @@
+.hero-journey { position: relative; z-index: 4; width: min(100% - 48px, 1152px); margin: 0 auto 40px; display: grid; gap: 28px; }
+.journey-phase { position: relative; min-width: 0; }
+.journey-label { margin-bottom: 10px; color: var(--color-muted); font-family: var(--font-mono), monospace; font-size: .625rem; letter-spacing: .09em; text-transform: uppercase; }
+.journey-label > span { color: var(--color-accent); margin-right: 6px; }
+.journey-tools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.journey-tool summary { min-height: 44px; cursor: pointer; list-style: none; border: 1px solid var(--color-line); border-radius: 9px; background: rgb(17 18 16 / 92%); }
+.journey-tool summary::-webkit-details-marker { display: none; }
+.journey-tool-face { min-height: 44px; display: flex; align-items: center; gap: 9px; padding: 8px 10px; color: var(--color-muted); }
+.journey-tool-name { font-size: .72rem; line-height: 1.4; }
+.journey-tool .skill-logo { width: 22px; height: 22px; flex: none; opacity: .85; }
+.journey-tool:is([open], :hover, :focus-within) summary { border-color: var(--color-accent-muted); }
+.journey-tool:is([open], :hover, :focus-within) .journey-tool-face { color: var(--color-ink); }
+.journey-tool:is([open], :hover, :focus-within) .skill-logo { opacity: 1; }
+.journey-context { padding: 14px; border: 1px solid var(--color-line-strong); background: var(--color-surface); color: var(--color-muted); font-size: .8rem; line-height: 1.7; }
+.journey-context strong { color: var(--color-ink); font-weight: 500; }
+.journey-context p { margin-top: 5px; }
+.journey-context > span { display: block; margin-top: 8px; font-size: .65rem; color: var(--color-dim); }
+
+@keyframes journey-arrive {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .sequence-hero[data-enhanced="true"] .hero-journey { position: absolute; width: 280px; right: max(40px, calc((100vw - 1152px) / 2)); bottom: max(64px, 10svh); margin: 0; gap: 0; transition: opacity 240ms ease, visibility 240ms; }
+  .sequence-hero[data-enhanced="true"] .journey-phase { display: none; }
+  .sequence-hero[data-enhanced="true"][data-phase="student"] [data-journey-phase="student"],
+  .sequence-hero[data-enhanced="true"][data-phase="professional"] [data-journey-phase="professional"],
+  .sequence-hero[data-enhanced="true"][data-phase="human-ai"] [data-journey-phase="human-ai"] { display: block; }
+  .sequence-hero[data-enhanced="true"] .journey-tool summary { transform: translateY(calc(var(--sequence-progress) * -8px)); transition: transform 450ms ease, border-color 180ms ease; }
+  .sequence-hero[data-enhanced="true"] .journey-tool-face { animation: journey-arrive 650ms cubic-bezier(.22, 1, .36, 1) both; animation-delay: calc(var(--tool-order) * 90ms); }
+  .sequence-hero[data-enhanced="true"] .journey-context { position: absolute; bottom: calc(100% + 12px); left: 0; width: 100%; z-index: 2; box-shadow: 0 8px 24px rgb(0 0 0 / 20%); }
+  .sequence-hero[data-departed="true"] .hero-journey { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+@media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
+  .sequence-hero[data-enhanced="true"] .hero-journey { top: var(--journey-mobile-top, 96px); bottom: auto; right: auto; left: 20px; width: 154px; }
+  .sequence-hero[data-enhanced="true"] .journey-label { font-size: .55rem; margin-bottom: 6px; letter-spacing: .035em; }
+  .sequence-hero[data-enhanced="true"] .journey-tools { gap: 5px; }
+  .sequence-hero[data-enhanced="true"] .journey-tool-face { padding: 5px 3px; min-height: 48px; flex-direction: column; gap: 3px; }
+  .sequence-hero[data-enhanced="true"] .journey-tool .skill-logo { width: 18px; height: 18px; }
+  .sequence-hero[data-enhanced="true"] .journey-tool-name { font-size: .6rem; }
+  .sequence-hero[data-enhanced="true"] .journey-context { top: calc(100% + 8px); bottom: auto; width: min(320px, calc(100vw - 40px)); }
+}
+@media (min-width: 1024px) {
+  .hero-journey { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .sequence-hero[data-enhanced="true"] .hero-journey { grid-template-columns: 1fr; }
+}
+@media (forced-colors: active) {
+  .journey-tool summary, .journey-context { background: Canvas; border-color: CanvasText; }
+}

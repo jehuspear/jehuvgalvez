@@ -1,4 +1,5 @@
 import { HeroSequence } from "@/components/motion/hero-sequence";
+import { HeroJourney } from "@/components/motion/hero-journey";
 import { HeroStory } from "@/components/sections/hero-story";
 import { Container } from "@/components/ui/container";
 import { profile } from "@/data/profile";
@@ -19,6 +20,7 @@ export function Hero() {
           <p className="sequence-scroll-hint mt-10 text-xs tracking-[0.14em] text-muted uppercase" aria-hidden="true">Scroll to explore <span className="ml-2 text-accent">↓</span></p>
         </Container>
       </div>
+      <HeroJourney />
     </HeroSequence>
   );
 }
