@@ -29,7 +29,7 @@ The resume in `resources/Jehu_Galvez_Resume.pdf` is factual source material, not
 
 ## Validation and deployment
 
-CI runs lint, typecheck, and build, without publishing. The legacy workflow that uploaded the entire repository is archived. V2 hosting is intentionally unconfigured; `next build` currently targets a Next.js server. A GitHub Pages deployment would require an explicit static-export/base-path decision.
+CI runs lint, typecheck, and build, without publishing. The legacy workflow that uploaded the entire repository is archived. V2 is hosted on Vercel; `next build` targets a Next.js server. Push and deploy `portfolio-v2` to publish local changes. A GitHub Pages deployment would require an explicit static-export/base-path decision.
 
 No automated browser test suite or coverage target is established yet. Check section order, anchor destinations, mobile overflow, keyboard focus, and content with JavaScript disabled. Reduced motion displays a static professional poster with no sequence requests or pinned scrolling.
 
@@ -41,13 +41,13 @@ Tooling note: ESLint is pinned to 9.39.5 because the React plugin bundled by esl
 
 ## Scroll-controlled hero
 
-Originals remain under `public/hero/jehu-hero-sequence-ready/public/hero/`; the previous upscaled set is also retained as reference. The active set is `public/hero/jehu-hero-sequence-native/`, regenerated directly from the owner's raw video. Desktop uses all 145 native 1280×720 source frames, WebP quality 98. Smaller screens, Save-Data, and 2G use 73 sampled 960×540 frames, WebP quality 94. This avoids the old extracted-image compression and upscaling; source detail remains limited to 720p. The selected set stays fixed during a mount.
+Originals and earlier derivative sets remain as reference. The active deployable frames are `public/hero/jehu-hero-sequence-web-0488020e9bc4/`, generated directly from the approved video. Desktop retains all 145 native 1280×720 frames at WebP quality 86 (16.0 MB); mobile retains 73 sampled 960×540 frames at quality 84 (5.0 MB). Smaller screens, Save-Data, 2G/3G, and reported downlinks below 1.5 Mbps use the mobile set. The set stays fixed during a mount; source detail remains limited to 720p. Hashed frame URLs have one-year immutable caching, and posters reuse those responsive frame URLs.
 
-The centered desktop 16:9 composition remains capped at 1280×720 CSS pixels and 80svh. High-quality canvas scaling never allocates backing pixels beyond the source dimensions. Arrival warms four frames; a five-frame nearby window, three-request concurrency limit, and bounded bitmap cache keep the rest demand-loaded. Abort/cancel/evict behavior and skeleton/poster fallbacks remain in place.
+The centered desktop 16:9 composition remains capped at 1280×720 CSS pixels and 80svh. High-quality canvas scaling never allocates backing pixels beyond the source dimensions. Arrival warms four frames; a five-frame nearby window, three-request concurrency limit, and bounded bitmap cache keep the rest demand-loaded. Requested frames finish during retargeting; obsolete prefetches are canceled. Nearby decoded pixels provide a bounded fallback while exact targets load. Skeleton/poster fallbacks remain in place.
 
 `HeroStory` adds Student → Professional → Human + AI introductions. Captions follow the actually displayed source frame, including sparse mobile sampling, delayed decoding, and reverse scrolling. Copy uses verified education, internships, and owner-confirmed AI tools; the final transformation is a creative vision. Reduced motion and no JavaScript show all three descriptions in normal flow, with a static poster and no sequence requests.
 
-Regenerate with `python scripts/extract-hero-video.py --source path/to/jehu-galvez-transition.mp4` (FFmpeg/FFprobe and Pillow required only for generation). See `docs/hero-quality.md` for provenance, phase timing, transfer sizes, file inventory, and validation.
+Regenerate deployable assets with `python scripts/optimize-hero-assets.py --source path/to/jehu-galvez-transition.mp4` (FFmpeg and Pillow required only for generation). See `docs/media-performance.md` for cache policies, measurements, deployment checks, and the file inventory; `docs/hero-quality.md` records the original quality milestone.
 
 ## Hero to Intro / skills slice
 

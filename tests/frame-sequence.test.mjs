@@ -74,3 +74,42 @@ test("cache bounds requests and memory, preserves the displayed frame, and dispo
     else delete globalThis.createImageBitmap;
   }
 });
+
+test("retargeting completes requested frames, cancels obsolete prefetch, and bounds fallback distance", async () => {
+  const originalFetch = globalThis.fetch;
+  const originalDecode = globalThis.createImageBitmap;
+  const pending = new Map();
+  globalThis.fetch = (url, options) => new Promise((resolve, reject) => {
+    assert.equal(options.cache, "force-cache");
+    pending.set(Number(url), { signal: options.signal, resolve: () => resolve({ ok: true, blob: async () => url }) });
+    options.signal.addEventListener("abort", () => reject(new DOMException("Aborted", "AbortError")), { once: true });
+  });
+  globalThis.createImageBitmap = async id => ({ id, close() {} });
+  const cache = new FrameSequenceCache({ count: 100, url: String, onChange() {}, capacity: 6 });
+  const flush = () => new Promise(resolve => setImmediate(resolve));
+  try {
+    cache.seek(10);
+    cache.seek(11); // A prefetched frame becomes an explicitly requested target.
+    cache.seek(20);
+    await flush();
+    assert.equal(pending.get(10).signal.aborted, false);
+    assert.equal(pending.get(11).signal.aborted, false);
+    assert.equal(pending.get(9).signal.aborted, true);
+    pending.get(10).resolve();
+    pending.get(11).resolve();
+    await flush();
+    assert.ok(cache.get(10), "completed earlier targets stay reusable");
+    assert.equal(cache.nearest(12, 3), 11);
+    assert.equal(cache.nearest(20, 3), undefined, "do not substitute a visually distant frame");
+    pending.get(20).resolve();
+    await flush();
+    assert.equal(cache.nearest(20, 3), 20);
+    assert.ok(cache.size <= 6);
+  } finally {
+    cache.dispose();
+    await flush();
+    globalThis.fetch = originalFetch;
+    if (originalDecode) globalThis.createImageBitmap = originalDecode;
+    else delete globalThis.createImageBitmap;
+  }
+});

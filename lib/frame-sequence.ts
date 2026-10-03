@@ -23,7 +23,7 @@ type CacheOptions = {
 /** A sliding decode window, not a preload of the entire sequence. */
 export class FrameSequenceCache {
   private frames = new Map<number, ImageBitmap>();
-  private requests = new Map<number, AbortController>();
+  private requests = new Map<number, { controller: AbortController; primary: boolean }>();
   private failed = new Set<number>();
   private wanted: number[] = [];
   private target = 0;
@@ -41,6 +41,18 @@ export class FrameSequenceCache {
   get size() { return this.frames.size; }
   get(index: number) { return this.frames.get(index); }
 
+  // A nearby decoded frame keeps motion moving while the exact target is in transit.
+  nearest(target: number, maxDistance: number): number | undefined {
+    if (this.frames.has(target)) return target;
+    let nearest: number | undefined;
+    let distance = maxDistance + 1;
+    for (const index of this.frames.keys()) {
+      const difference = Math.abs(index - target);
+      if (difference < distance) { nearest = index; distance = difference; }
+    }
+    return nearest;
+  }
+
   protect(index: number) {
     this.pinned = index;
     this.trim();
@@ -50,15 +62,18 @@ export class FrameSequenceCache {
     if (this.disposed) return;
     this.target = target;
     this.wanted = frameWindow(target, this.options.count);
-    for (const [index, controller] of this.requests) {
-      if (!this.wanted.includes(index)) controller.abort();
+    for (const [index, request] of this.requests) {
+      if (index === target) request.primary = true;
+      // Finish frames that were explicitly requested; cancel obsolete speculative work.
+      // Continuous scrolling otherwise aborts every response before pixels can arrive.
+      if (!request.primary && !this.wanted.includes(index)) request.controller.abort();
     }
     this.pump();
   }
 
   pause() {
     this.wanted = [];
-    for (const controller of this.requests.values()) controller.abort();
+    for (const request of this.requests.values()) request.controller.abort();
   }
 
   dispose() {
@@ -85,17 +100,17 @@ export class FrameSequenceCache {
       if (this.requests.size >= 3) break;
       if (this.frames.has(index) || this.requests.has(index) || this.failed.has(index)) continue;
       const controller = new AbortController();
-      this.requests.set(index, controller);
+      this.requests.set(index, { controller, primary: index === this.target });
       void this.load(index, controller);
     }
   }
 
   private async load(index: number, controller: AbortController) {
     try {
-      const response = await fetch(this.options.url(index), { signal: controller.signal });
+      const response = await fetch(this.options.url(index), { signal: controller.signal, cache: "force-cache" });
       if (!response.ok) throw new Error(`Frame response: ${response.status}`);
       const bitmap = await createImageBitmap(await response.blob());
-      if (this.disposed || controller.signal.aborted || !this.wanted.includes(index)) {
+      if (this.disposed || controller.signal.aborted) {
         bitmap.close();
       } else {
         this.frames.set(index, bitmap);

@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { test } from "node:test";
 import { heroPhaseAtFrame } from "../lib/hero-phase.ts";
 
-const manifest = JSON.parse(readFileSync(new URL("../public/hero/jehu-hero-sequence-native/manifest.json", import.meta.url)));
+const manifest = JSON.parse(readFileSync(new URL("../data/hero-web-manifest.json", import.meta.url)));
 
 test("phase changes match the reviewed source-video boundaries in both scroll directions", () => {
   const starts = manifest.phaseStartFrames;
@@ -29,5 +29,18 @@ test("responsive sampling preserves endpoints and phase timing instead of halvin
       const index = indices.findIndex(frame => frame >= boundary);
       assert.equal(heroPhaseAtFrame(indices[index], manifest.phaseStartFrames), phase);
     }
+  }
+});
+
+test("web derivatives preserve native dimensions, source mapping, and phases with smaller payloads", () => {
+  const reference = JSON.parse(readFileSync(new URL("../public/hero/jehu-hero-sequence-native/manifest.json", import.meta.url)));
+  assert.deepEqual(manifest.phaseStartFrames, reference.phaseStartFrames);
+  assert.equal(manifest.source.sha256, reference.source.sha256);
+  assert.match(manifest.assetPath, /jehu-hero-sequence-web-[a-f0-9]{12}$/);
+  for (const variant of ["desktop", "mobile"]) {
+    assert.equal(manifest[variant].width, reference[variant].width);
+    assert.equal(manifest[variant].height, reference[variant].height);
+    assert.deepEqual(manifest[variant].sourceFrameIndices, reference[variant].sourceFrameIndices);
+    assert.ok(manifest[variant].totalBytes < reference[variant].totalBytes);
   }
 });

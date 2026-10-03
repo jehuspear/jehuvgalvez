@@ -7,7 +7,7 @@ import { frameUrl, heroSequence } from "@/data/hero-sequence";
 import { FrameSequenceCache, frameAtProgress } from "@/lib/frame-sequence";
 
 type DeviceHints = Navigator & {
-  connection?: { saveData?: boolean; effectiveType?: string };
+  connection?: { saveData?: boolean; effectiveType?: string; downlink?: number };
 };
 
 export function useScrollSequence() {
@@ -29,7 +29,8 @@ export function useScrollSequence() {
     const wide = window.matchMedia("(min-width: 1024px)");
     const device = navigator as DeviceHints;
     const constrained = device.connection?.saveData ||
-      ["slow-2g", "2g"].includes(device.connection?.effectiveType ?? "");
+      ["slow-2g", "2g", "3g"].includes(device.connection?.effectiveType ?? "") ||
+      (device.connection?.downlink !== undefined && device.connection.downlink < 1.5);
     // Fixed for this mount: resizing never fetches the other sequence.
     const variant = !wide.matches || constrained ? "mobile" : "desktop";
     const sequence = heroSequence[variant];
@@ -114,9 +115,10 @@ export function useScrollSequence() {
       cache.seek(target);
 
       // If the requested image isn't decoded yet, keep the previous canvas pixels.
-      const frame = cache.get(target) ?? cache.get(displayed);
+      const nearest = cache.nearest(target, 3);
+      const next = nearest ?? displayed;
+      const frame = cache.get(next);
       if (!frame) return;
-      const next = cache.get(target) ? target : displayed;
       // Use layout dimensions: the Intro handoff's CSS scale must not resize the backing store.
       const cssWidth = canvas!.clientWidth;
       const cssHeight = canvas!.clientHeight;

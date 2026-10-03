@@ -26,7 +26,9 @@ export function HeroSequence({ children }: { children: ReactNode }) {
       <div ref={stageRef} className="sequence-stage">
         <div className="sequence-visual" data-poster-state="loading" aria-hidden="true">
           <picture>
+            <source media="(prefers-reduced-motion: reduce) and (max-width: 1023px)" srcSet={heroSequence.reducedMobilePoster} />
             <source media="(prefers-reduced-motion: reduce)" srcSet={heroSequence.reducedPoster} />
+            <source media="(max-width: 1023px)" srcSet={heroSequence.mobilePoster} />
             {/* Already compressed local WebP; picture must switch posters before hydration. */}
             <img ref={posterRef} src={heroSequence.poster} alt="" width={heroSequence.desktop.width} height={heroSequence.desktop.height} fetchPriority="high" className="sequence-poster" />
           </picture>

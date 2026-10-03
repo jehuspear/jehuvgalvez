@@ -1,5 +1,7 @@
 # Hero quality and narrative
 
+The sizes and encoding settings below describe the original quality milestone, whose assets remain as reference. The active deployable set is now documented in [media performance](media-performance.md); its source dimensions, frame mapping, and phase timing are unchanged.
+
 ## Active source
 
 The active sequence is generated directly from the owner's `jehu-galvez-transition.mp4`: **1280×720, 24fps, 145 frames, 6.041667 seconds**. The video remains outside the public directory. `manifest.json` records its SHA-256, dimensions, timing, encoding settings, and source-frame indices.
