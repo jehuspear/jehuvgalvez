@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/container";
 import { ProjectHeading, ProjectTags } from "@/components/ui/project-heading";
 import { SectionReveal } from "@/components/motion/section-reveal";
 import { projectChapters } from "@/data/project-chapters";
+import { ImageViewer } from "@/components/ui/image-viewer";
 import { cafeMedia } from "@/data/cafe-media";
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -13,12 +14,12 @@ function ProductScreen({ screen }: { screen: CafeScreen }) {
   const url = `${base}/projects/white-house-cafe/${screen.file}`;
   return (
     <figure className="cafe-screen" data-portrait={screen.portrait}>
-      <a className="cafe-screen-link" href={url} target="_blank" rel="noopener noreferrer" aria-label={`View ${screen.title.replace(/\.$/, "")} screenshot full size (opens in a new tab)`}>
+      <ImageViewer src={url} alt={screen.alt} title={screen.title}>
         <span className="cafe-image-stage">
           <Image src={url} width={screen.width} height={screen.height} loading="lazy" sizes={screen.portrait ? "(min-width: 768px) 260px, (max-width: 479px) 100vw, 260px" : "(min-width: 1280px) 560px, (min-width: 768px) 46vw, 100vw"} alt={screen.alt} />
         </span>
         <span className="cafe-image-action">View full size <ArrowUpRight size={14} aria-hidden="true" /></span>
-      </a>
+      </ImageViewer>
       <figcaption><h4>{screen.title}</h4><p>{screen.caption}</p></figcaption>
     </figure>
   );

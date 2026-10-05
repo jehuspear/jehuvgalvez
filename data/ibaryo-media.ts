@@ -12,7 +12,7 @@ export const ibaryoMedia = [
     alt: "iBaryo movement ledger filtered to May 2026, showing stock adjustments, balances, and responsible staff.",
   },
   {
-    id: "resource-tracking-completed", title: "Follow resources through completion.", label: "03 / Resource workflow",
+    id: "resource-tracking-completed-redacted", title: "Follow resources through completion.", label: "03 / Resource workflow",
     caption: "Track assigned resources through awaiting action, in progress, pending validation, and completion.",
     alt: "A completed iBaryo borrowing request with requester, assigned staff, approver, approval date, and a four-stage completion tracker.",
   },

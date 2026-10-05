@@ -80,3 +80,32 @@
 @media (prefers-reduced-motion: reduce) {
   .chapter-progress { --chapter-progress: 1 !important; }
 }
+
+/* Native dialog enters the top layer above fixed portfolio controls. */
+.image-viewer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #080908;
+  color: var(--color-ink);
+}
+.image-viewer::backdrop { background: #080908; }
+.image-viewer-shell {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  height: 100%;
+  padding: max(12px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+}
+.image-viewer-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 12px; }
+.image-viewer-header h2 { font-size: var(--text-sm); line-height: 1.4; }
+.image-viewer-header button { display: grid; place-items: center; flex-shrink: 0; width: 48px; height: 48px; border: var(--border-strong); background: var(--color-surface); color: var(--color-ink); cursor: pointer; }
+.image-viewer-header button:hover { color: var(--color-accent); }
+.image-viewer-media { position: relative; min-height: 0; }
+.image-viewer .image-viewer-media .image-viewer-image { object-fit: contain; max-height: none; max-width: 100%; }
+.image-viewer-hint { text-align: center; color: var(--color-muted); font-size: var(--text-xs); padding-top: 12px; }
