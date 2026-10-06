@@ -41,8 +41,8 @@
 .nav-link[data-item="experience"], .nav-link[data-item="recognition"] { --label-width: 98px; }
 .nav-link[data-item="capabilities"] { --label-width: 104px; }
 .nav-link:is(:hover, :focus-visible) { color: var(--color-ink); background: rgb(243 240 231 / 6%); }
-.nav-link[aria-current], .nav-link[data-current] { color: var(--color-accent); }
-.nav-link[aria-current]::after, .nav-link[data-current]::after { content: ""; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 3px; height: 3px; border-radius: 50%; background: currentColor; }
+.nav-link[aria-current] { color: var(--color-accent); }
+.nav-link[aria-current]::after { content: ""; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 3px; height: 3px; border-radius: 50%; background: currentColor; }
 .nav-home[aria-current]::after { opacity: var(--nav-morph); }
 .nav-home { flex: 1; justify-items: start; }
 .nav-home .nav-icon { left: 50%; transform: translate(-50%, calc((1 - var(--nav-morph)) * 5px)); }
@@ -74,26 +74,6 @@
 /* Anchor headings and the skip-link target clear the persistent navigation. */
 main[id], main section[id], main article[id] { scroll-margin-top: calc(96px + env(safe-area-inset-top, 0px)); }
 
-/* Additional sections stay available on mobile without replacing the primary pill. */
-.nav-more-item { display: none; }
-.nav-more { position: relative; }
-.nav-more summary { list-style: none; cursor: pointer; }
-.nav-more summary::-webkit-details-marker { display: none; }
-.nav-more-sections {
-  position: absolute;
-  top: calc(100% + 14px);
-  right: -8px;
-  width: 244px;
-  max-width: calc(100vw - 32px);
-  padding: 8px;
-  border: 1px solid var(--color-line);
-  border-radius: 14px;
-  background: var(--color-surface);
-  box-shadow: 0 8px 24px rgb(0 0 0 / 25%);
-}
-.nav-more-sections a { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 12px; border-radius: 8px; color: var(--color-muted); font-size: .875rem; }
-.nav-more-sections a:is(:hover, :focus-visible) { color: var(--color-ink); background: rgb(243 240 231 / 6%); }
-.nav-more-sections a[aria-current] { color: var(--color-accent); text-decoration: underline; text-underline-offset: 5px; }
 @media (min-width: 640px) and (max-width: 1023px) {
   /* A full text row is too crowded here; retain all seven 44px icon targets. */
   .portfolio-header { --nav-morph: 1; width: 392px; max-width: calc(100vw - 32px); }
@@ -142,19 +122,24 @@ main[id], main section[id], main article[id] { scroll-margin-top: calc(96px + en
   .site-header-space { height: 0; }
   /* Keep the sticky Hero image below the expanded navigation, including its no-JS fallback. */
   .sequence-stage { padding-top: calc(80px + env(safe-area-inset-top, 0px)); }
-  .portfolio-header[data-mobile-minimized="true"] { width: 248px; top: calc(8px + env(safe-area-inset-top, 0px)); }
-  .portfolio-header[data-mobile-minimized="true"] .portfolio-nav { height: 48px; padding-inline: 8px; gap: 0; }
-  .portfolio-header[data-mobile-minimized="true"] .nav-items { gap: 0; }
-  .portfolio-header[data-mobile-minimized="true"] .nav-icon { width: 18px; height: 18px; }
-  .portfolio-header[data-mobile-minimized="true"] .nav-progress { left: 18px; right: 18px; }
-  .portfolio-header { --nav-morph: 1; top: calc(12px + env(safe-area-inset-top, 0px)); width: 272px; max-width: calc(100vw - 32px); }
-  .portfolio-nav { gap: 2px; }
-  .nav-items { gap: 2px; }
-  .nav-home { justify-items: center; }
-  .nav-secondary-item { display: none; }
-  .nav-more-item { display: block; }
+  /* Seven equal-width links; shrink the artwork while retaining 44px tap targets. */
+  .portfolio-header { --nav-morph: 1; top: calc(12px + env(safe-area-inset-top, 0px)); width: clamp(310px, calc(100% - 16px), 352px); max-width: 100%; }
+  .portfolio-nav { height: 52px; padding-inline: 0; gap: 0; }
+  .nav-home { flex: 1; justify-items: center; }
+  .nav-items { flex: 6; min-width: 0; display: grid; grid-template-columns: repeat(6, minmax(44px, 1fr)); gap: 0; }
+  .nav-items .nav-link { width: 100%; }
+  .nav-identity, .nav-label { display: none; }
+  .nav-icon { width: 18px; height: 18px; }
+  .nav-progress { left: 14px; right: 14px; }
+  .portfolio-header[data-mobile-minimized="true"] { width: 324px; top: calc(8px + env(safe-area-inset-top, 0px)); }
+  .portfolio-header[data-mobile-minimized="true"] .portfolio-nav { height: 48px; }
+  .portfolio-header[data-mobile-minimized="true"] .nav-icon { width: 16px; height: 16px; }
   .portfolio-header .nav-link:is(:hover, :focus-visible) .nav-tooltip { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
-  .portfolio-header .nav-more[open] summary .nav-tooltip { visibility: hidden; opacity: 0; }
+  /* Edge tooltips stay within the narrow viewport. */
+  .portfolio-header .nav-home .nav-tooltip { left: 0; transform: translate(0, -3px); }
+  .portfolio-header .nav-items li:last-child .nav-tooltip { left: auto; right: 0; transform: translate(0, -3px); }
+  .portfolio-header .nav-home:is(:hover, :focus-visible) .nav-tooltip,
+  .portfolio-header .nav-items li:last-child .nav-link:is(:hover, :focus-visible) .nav-tooltip { transform: translate(0, 0); }
   .resume-control, .resume-control[open] { right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: 48px; height: 48px; border-radius: 15px; }
   .resume-control summary { width: 46px; height: 46px; border-radius: 14px; }
   .resume-actions { inset: auto -1px calc(100% + 12px) auto; flex-direction: column; align-items: stretch; width: 244px; padding: 8px; border: 1px solid rgb(139 213 238 / 50%); border-radius: 14px; background: #111618; box-shadow: 0 8px 24px rgb(0 0 0 / 25%); }
