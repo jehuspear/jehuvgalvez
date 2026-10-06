@@ -18,7 +18,7 @@ export function About() {
           <dl className="about-facts"><div><dt>Education</dt><dd>{profile.education}</dd></div><div><dt>Based in</dt><dd>{profile.location}</dd></div></dl>
         </div>
         <figure className="about-portrait">
-          <div className="portrait-frame"><Image src={`${base}/about/jehu-formal.webp`} width={960} height={1200} sizes="(min-width: 1024px) 40vw, 85vw" alt="Jehu Galvez in a formal black suit and tie." /></div>
+          <div className="portrait-frame"><Image src={`${base}/about/jehu-formal.webp`} width={960} height={1200} sizes="(min-width: 1280px) 450px, (min-width: 1024px) 40vw, (min-width: 530px) 450px, 85vw" alt="Jehu Galvez in a formal black suit and tie." /></div>
           <figcaption><span>Jehu Galvez</span><span>Software / systems / people</span></figcaption>
         </figure>
       </div>

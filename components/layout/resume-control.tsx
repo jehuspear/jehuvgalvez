@@ -11,26 +11,57 @@ export function ResumeControl() {
 
   useEffect(() => {
     const root = rootRef.current;
-    if (!root) return;
-    const hover = matchMedia("(hover: hover) and (pointer: fine)");
+    const trigger = triggerRef.current;
+    if (!root || !trigger) return;
+    const desktop = matchMedia("(min-width: 640px)");
+    const hover = matchMedia("(min-width: 640px) and (hover: hover) and (pointer: fine)");
     let escapeFocus = false;
-    function enter() { if (hover.matches) root!.open = true; }
-    function leave() { if (hover.matches && !root!.matches(":focus-within")) root!.open = false; }
+    let hoverOpened = false;
+    let pinned = root.open;
+    function close() {
+      hoverOpened = false;
+      pinned = false;
+      root!.open = false;
+    }
+    function enter() {
+      if (hover.matches && !root!.open) {
+        hoverOpened = true;
+        root!.open = true;
+      }
+    }
+    function leave() {
+      if (hover.matches && !pinned && !root!.matches(":focus-within")) close();
+    }
     function focus(event: FocusEvent) {
-      if (!escapeFocus && (event.target as HTMLElement).matches(":focus-visible")) root!.open = true;
+      if (desktop.matches && !escapeFocus && (event.target as HTMLElement).matches(":focus-visible")) {
+        hoverOpened = false;
+        root!.open = true;
+      }
+    }
+    function activate(event: MouseEvent) {
+      if (event.defaultPrevented) return;
+      if (hover.matches && event.detail > 0 && hoverOpened && root!.open) {
+        // A first pointer click pins the hover reveal instead of closing it.
+        event.preventDefault();
+        hoverOpened = false;
+        pinned = true;
+      } else {
+        hoverOpened = false;
+        pinned = !root!.open;
+      }
     }
     function blur(event: FocusEvent) {
-      if (!root!.contains(event.relatedTarget as Node | null)) root!.open = false;
+      if (!root!.contains(event.relatedTarget as Node | null)) close();
     }
     function outside(event: PointerEvent) {
-      if (!root!.contains(event.target as Node)) root!.open = false;
+      if (!root!.contains(event.target as Node)) close();
     }
     function key(event: KeyboardEvent) {
       if (event.key === "Escape" && root!.open) {
         event.preventDefault();
-        root!.open = false;
+        close();
         escapeFocus = true;
-        triggerRef.current?.focus();
+        trigger!.focus();
         escapeFocus = false;
       }
     }
@@ -39,6 +70,7 @@ export function ResumeControl() {
     root.addEventListener("focusin", focus);
     root.addEventListener("focusout", blur);
     root.addEventListener("keydown", key);
+    trigger.addEventListener("click", activate);
     document.addEventListener("pointerdown", outside);
     return () => {
       root.removeEventListener("pointerenter", enter);
@@ -46,6 +78,7 @@ export function ResumeControl() {
       root.removeEventListener("focusin", focus);
       root.removeEventListener("focusout", blur);
       root.removeEventListener("keydown", key);
+      trigger.removeEventListener("click", activate);
       document.removeEventListener("pointerdown", outside);
     };
   }, []);

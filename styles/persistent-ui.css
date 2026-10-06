@@ -119,7 +119,7 @@ main[id], main section[id], main article[id] { scroll-margin-top: calc(96px + en
 .resume-control summary {
   position: absolute;
   top: 0;
-  left: 0;
+  right: 0;
   display: grid;
   place-items: center;
   width: 54px;
@@ -131,7 +131,7 @@ main[id], main section[id], main article[id] { scroll-margin-top: calc(96px + en
 }
 .resume-control summary::-webkit-details-marker { display: none; }
 .resume-control :focus-visible { outline-color: var(--resume-accent); outline-offset: 3px; }
-.resume-actions { position: absolute; inset: 0 7px 0 60px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.resume-actions { position: absolute; inset: 0 60px 0 7px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .resume-actions a { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 8px; border-radius: 10px; font-size: .8rem; white-space: nowrap; }
 .resume-actions a:hover { background: rgb(139 213 238 / 8%); color: var(--resume-accent); }
 .resume-actions a + a { border-left: 1px solid rgb(139 213 238 / 20%); border-radius: 0 10px 10px 0; }
