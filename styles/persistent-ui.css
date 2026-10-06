@@ -8,7 +8,7 @@
   z-index: 40;
   top: calc(24px - var(--nav-morph) * 8px + env(safe-area-inset-top, 0px));
   left: 50%;
-  width: calc(var(--nav-wide) * (1 - var(--nav-morph)) + 288px * var(--nav-morph));
+  width: calc(var(--nav-wide) * (1 - var(--nav-morph)) + 392px * var(--nav-morph));
   transform: translateX(-50%);
 }
 .portfolio-nav {
@@ -38,10 +38,11 @@
   font-size: .875rem;
   transition: color 160ms, background 160ms;
 }
-.nav-link[data-item="experience"] { --label-width: 98px; }
+.nav-link[data-item="experience"], .nav-link[data-item="recognition"] { --label-width: 98px; }
+.nav-link[data-item="capabilities"] { --label-width: 104px; }
 .nav-link:is(:hover, :focus-visible) { color: var(--color-ink); background: rgb(243 240 231 / 6%); }
-.nav-link[aria-current] { color: var(--color-accent); }
-.nav-link[aria-current]::after { content: ""; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 3px; height: 3px; border-radius: 50%; background: currentColor; }
+.nav-link[aria-current], .nav-link[data-current] { color: var(--color-accent); }
+.nav-link[aria-current]::after, .nav-link[data-current]::after { content: ""; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 3px; height: 3px; border-radius: 50%; background: currentColor; }
 .nav-home[aria-current]::after { opacity: var(--nav-morph); }
 .nav-home { flex: 1; justify-items: start; }
 .nav-home .nav-icon { left: 50%; transform: translate(-50%, calc((1 - var(--nav-morph)) * 5px)); }
@@ -71,7 +72,33 @@
 .nav-progress { position: absolute; bottom: -1px; left: 26px; right: 26px; height: 2px; overflow: hidden; border-radius: 2px; opacity: var(--nav-morph); background: rgb(177 180 169 / 12%); pointer-events: none; }
 .nav-progress span { display: block; height: 100%; background: var(--color-accent); transform: scaleX(var(--page-progress)); transform-origin: left; }
 /* Anchor headings and the skip-link target clear the persistent navigation. */
-main[id], main section[id] { scroll-margin-top: calc(96px + env(safe-area-inset-top, 0px)); }
+main[id], main section[id], main article[id] { scroll-margin-top: calc(96px + env(safe-area-inset-top, 0px)); }
+
+/* Additional sections stay available on mobile without replacing the primary pill. */
+.nav-more-item { display: none; }
+.nav-more { position: relative; }
+.nav-more summary { list-style: none; cursor: pointer; }
+.nav-more summary::-webkit-details-marker { display: none; }
+.nav-more-sections {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: -8px;
+  width: 244px;
+  max-width: calc(100vw - 32px);
+  padding: 8px;
+  border: 1px solid var(--color-line);
+  border-radius: 14px;
+  background: var(--color-surface);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 25%);
+}
+.nav-more-sections a { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 12px; border-radius: 8px; color: var(--color-muted); font-size: .875rem; }
+.nav-more-sections a:is(:hover, :focus-visible) { color: var(--color-ink); background: rgb(243 240 231 / 6%); }
+.nav-more-sections a[aria-current] { color: var(--color-accent); text-decoration: underline; text-underline-offset: 5px; }
+@media (min-width: 640px) and (max-width: 1023px) {
+  /* A full text row is too crowded here; retain all seven 44px icon targets. */
+  .portfolio-header { --nav-morph: 1; width: 392px; max-width: calc(100vw - 32px); }
+  .portfolio-header .nav-name { display: none; }
+}
 
 .resume-control {
   --resume-accent: #8bd5ee;
@@ -124,7 +151,10 @@ main[id], main section[id] { scroll-margin-top: calc(96px + env(safe-area-inset-
   .portfolio-nav { gap: 2px; }
   .nav-items { gap: 2px; }
   .nav-home { justify-items: center; }
+  .nav-secondary-item { display: none; }
+  .nav-more-item { display: block; }
   .portfolio-header .nav-link:is(:hover, :focus-visible) .nav-tooltip { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+  .portfolio-header .nav-more[open] summary .nav-tooltip { visibility: hidden; opacity: 0; }
   .resume-control, .resume-control[open] { right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: 48px; height: 48px; border-radius: 15px; }
   .resume-control summary { width: 46px; height: 46px; border-radius: 14px; }
   .resume-actions { inset: auto -1px calc(100% + 12px) auto; flex-direction: column; align-items: stretch; width: 244px; padding: 8px; border: 1px solid rgb(139 213 238 / 50%); border-radius: 14px; background: #111618; box-shadow: 0 8px 24px rgb(0 0 0 / 25%); }

@@ -1,17 +1,16 @@
 import Image from "next/image";
 import { ArrowUpRight, Plus } from "lucide-react";
 import { Container } from "@/components/ui/container";
-import { ProjectHeading, ProjectTags } from "@/components/ui/project-heading";
+import { ProjectHeading } from "@/components/ui/project-heading";
 import { SectionReveal } from "@/components/motion/section-reveal";
+import { ProjectProof } from "@/components/ui/project-proof";
 import { projectChapters } from "@/data/project-chapters";
 import { ImageViewer } from "@/components/ui/image-viewer";
-import { cafeMedia } from "@/data/cafe-media";
-
-const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const cafeMedia = projectChapters.cafe.media.screens;
 type CafeScreen = typeof cafeMedia[keyof typeof cafeMedia];
 
 function ProductScreen({ screen }: { screen: CafeScreen }) {
-  const url = `${base}/projects/white-house-cafe/${screen.file}`;
+  const url = `${projectChapters.cafe.media.basePath}/${screen.file}`;
   return (
     <figure className="cafe-screen" data-portrait={screen.portrait}>
       <ImageViewer src={url} alt={screen.alt} title={screen.title}>
@@ -37,6 +36,7 @@ export function CafeChapter() {
             <ProductScreen screen={cafeMedia.customization} />
           </div>
         </div>
+        <ProjectProof title={project.title} proof={project.proof} />
         <p className="cafe-demo-note">Demo order data · Sample customer names · Open any screen to inspect it full size.</p>
         <section className="cafe-story-beat" aria-labelledby="cafe-customer-title">
           <header><p className="diagram-caption">01 / Customer ordering</p><h4 id="cafe-customer-title">From selection to a numbered ticket.</h4></header>
@@ -58,7 +58,7 @@ export function CafeChapter() {
             {[cafeMedia.ready, cafeMedia.receipt, cafeMedia.pending, cafeMedia.pos].map(screen => <ProductScreen key={screen.file} screen={screen} />)}
           </div>
         </details>
-        <div className="project-bottom"><p>{project.details}</p><ProjectTags tags={project.tags} /></div>
+        <div className="project-bottom"><p>{project.details}</p></div>
       </SectionReveal></Container>
     </article>
   );

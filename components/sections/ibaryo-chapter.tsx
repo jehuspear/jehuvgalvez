@@ -1,16 +1,15 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/container";
-import { ProjectHeading, ProjectTags } from "@/components/ui/project-heading";
+import { ProjectHeading } from "@/components/ui/project-heading";
 import { SectionReveal } from "@/components/motion/section-reveal";
+import { ProjectProof } from "@/components/ui/project-proof";
 import { projectChapters } from "@/data/project-chapters";
 import { ImageViewer } from "@/components/ui/image-viewer";
-import { ibaryoMedia } from "@/data/ibaryo-media";
-
-const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const ibaryoMedia = projectChapters.ibaryo.media.screens;
 
 function ProductScreen({ screen, lead = false }: { screen: typeof ibaryoMedia[number]; lead?: boolean }) {
-  const url = `${base}/projects/ibaryo/${screen.id}.jpg`;
+  const url = `${projectChapters.ibaryo.media.basePath}/${screen.id}.jpg`;
   return (
     <figure className="ibaryo-screen">
       <p className="diagram-caption">{screen.label}</p>
@@ -32,10 +31,11 @@ export function IbaryoChapter() {
           <ProjectHeading {...project} />
           <ProductScreen screen={ibaryoMedia[0]} lead />
         </div>
+        <ProjectProof title={project.title} proof={project.proof} />
         <div className="ibaryo-supporting-screens">
           {ibaryoMedia.slice(1).map(screen => <ProductScreen key={screen.id} screen={screen} />)}
         </div>
-        <div className="project-bottom"><p>{project.details}</p><ProjectTags tags={project.tags} /></div>
+        <div className="project-bottom"><p>{project.details}</p></div>
       </SectionReveal></Container>
     </article>
   );

@@ -20,6 +20,7 @@ export function Recognition() {
                 </a>
                 <figcaption>
                   <span>{certificate.caption}</span>
+                  {certificate.project && <a className="editorial-link" href={certificate.project.href}>{certificate.project.label}<ArrowUpRight size={16} aria-hidden="true" /></a>}
                   <a className="editorial-link" href={url} target="_blank" rel="noopener noreferrer">View certificate<ArrowUpRight size={16} aria-hidden="true" /><span className="sr-only"> full size (opens in a new tab)</span></a>
                 </figcaption>
               </figure>
@@ -39,7 +40,6 @@ export function Recognition() {
               </label>
             ))}
           </fieldset>
-          <a href="#autopet" className="editorial-link recognition-project-link">Explore the AutoPet chapter<ArrowUpRight size={16} aria-hidden="true" /></a>
         </div>
       </RecognitionGallery>
     </Section>

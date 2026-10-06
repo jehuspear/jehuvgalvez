@@ -7,6 +7,7 @@ export type Certificate = {
   width: number;
   height: number;
   alt: string;
+  project?: { href: string; label: string };
 };
 
 // Labels and dates are grounded in Jehu's supplied certificates and instructions.
@@ -33,6 +34,7 @@ export const certificates: readonly Certificate[] = [
   },
   {
     id: "iot",
+    project: { href: "#autopet", label: "Explore AutoPet" },
     title: "Best in IoT-Device Award",
     detail: "AutoPet · NU Fairview · October 2025",
     caption: "Best in IoT-Device / AutoPet / 2025",
@@ -43,6 +45,7 @@ export const certificates: readonly Certificate[] = [
   },
   {
     id: "fpa",
+    project: { href: "#fpa-chapter", label: "Explore FPA Leave Management" },
     title: "FPA-LMS Recognition",
     detail: "Fertilizer and Pesticide Authority · May 2026",
     caption: "FPA-LMS / Certificate of Recognition / 2026",

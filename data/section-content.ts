@@ -18,6 +18,7 @@ export const capabilityNodes = [
 
 export const aboutCopy = {
   lead: "I build across the stack—and beyond the interface.",
-  body: "My work connects web applications, databases, IT operations, and connected devices. From leave-processing workflows to inventory tracking and an IoT pet-care prototype, I focus on practical systems built around the people who use them.",
+  body: "My work connects web applications, databases, IT operations, networking, and connected devices. From leave-processing workflows to inventory tracking and an IoT pet-care prototype, I focus on practical systems built around the people who use them.",
+  philosophy: "I start with how people work, then connect the interfaces, records, and devices that support that workflow.",
   learning: "I’m continuing to learn about cloud computing while developing my skills across software and systems.",
 } as const;

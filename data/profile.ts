@@ -4,6 +4,8 @@ export const profile = {
   fullName: "Jehu Vincent Ferrer Galvez",
   location: "Pasig City, Metro Manila, Philippines",
   email: "jehugalv@gmail.com",
+  github: "https://github.com/jehuspear",
+  professionalTitle: "Full-Stack Developer & Systems Builder",
   linkedIn: "https://www.linkedin.com/in/jehu-galvez/",
   summary: "Information Technology graduate with experience in full-stack web development, IT technical support, databases, networking, and IoT.",
   education: "Bachelor of Science in Information Technology, specializing in Mobile and Internet Technology. National University - Asia Pacific College, Fairview Campus, 2022–2026.",

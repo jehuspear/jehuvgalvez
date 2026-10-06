@@ -13,6 +13,7 @@ export function About() {
           <p className="editorial-meta">Jehu Vincent Ferrer Galvez</p>
           <p className="about-lead">{aboutCopy.lead}</p>
           <p>{aboutCopy.body}</p>
+          <p>{aboutCopy.philosophy}</p>
           <p>{aboutCopy.learning}</p>
           <dl className="about-facts"><div><dt>Education</dt><dd>{profile.education}</dd></div><div><dt>Based in</dt><dd>{profile.location}</dd></div></dl>
         </div>

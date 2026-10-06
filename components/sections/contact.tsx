@@ -20,6 +20,7 @@ export function Contact() {
             <a className="contact-primary editorial-button editorial-button-primary" href={`mailto:${profile.email}`}>Let’s talk<ArrowUpRight size={24} aria-hidden="true" /></a>
             <a className="contact-email editorial-link" href={`mailto:${profile.email}`}><span>{profile.email}</span><ArrowUpRight size={24} aria-hidden="true" /></a>
             <div className="contact-links">
+              <a href={profile.github} className="editorial-link" target="_blank" rel="noopener noreferrer">GitHub<ArrowUpRight size={18} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>
               <a href={profile.linkedIn} className="editorial-link" target="_blank" rel="noopener noreferrer">LinkedIn<ArrowUpRight size={18} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>
               <a href={`${base}/resume/Jehu_Galvez_Resume.pdf`} className="editorial-link" target="_blank" rel="noopener noreferrer">View résumé<FileText size={18} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>
               <a href={`${base}/resume/Jehu_Galvez_Resume.pdf`} download="Jehu_Galvez_Resume.pdf" className="editorial-link">Download PDF<ArrowUpRight size={18} aria-hidden="true" /></a>

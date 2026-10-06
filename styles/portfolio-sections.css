@@ -119,3 +119,9 @@
 @media (prefers-reduced-motion: reduce), (forced-colors: active) {
   .contact-silhouette { display: none; }
 }
+
+.footer-composition { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-5) var(--space-7); }
+.footer-description { margin-top: var(--space-2); font-size: var(--text-xs); }
+.footer-links { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-5); }
+.footer-links a { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 44px; }
+.footer-links a:hover { color: var(--color-ink); }

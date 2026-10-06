@@ -1,9 +1,9 @@
 type ProjectHeadingProps = {
   index: string; category: string; title: string; subtitle: string;
-  period: string; role: string; summary: string;
+  period: string; role: string; summary: string; tags: readonly string[];
 };
 
-export function ProjectHeading({ index, category, title, subtitle, period, role, summary }: ProjectHeadingProps) {
+export function ProjectHeading({ index, category, title, subtitle, period, role, summary, tags }: ProjectHeadingProps) {
   return (
     <header className="project-heading">
       <p className="project-eyebrow"><span aria-hidden="true">{index}</span><span>{category}</span></p>
@@ -14,6 +14,7 @@ export function ProjectHeading({ index, category, title, subtitle, period, role,
         <div><dt>Period</dt><dd>{period}</dd></div>
         <div><dt>Role</dt><dd>{role}</dd></div>
       </dl>
+      <ProjectTags tags={tags} />
     </header>
   );
 }

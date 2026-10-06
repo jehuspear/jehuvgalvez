@@ -18,6 +18,7 @@ export function usePortfolioNavigation() {
 
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
     const mobile = matchMedia("(max-width: 639px)");
+    const narrow = matchMedia("(max-width: 1023px)");
     const intersecting = new Set<string>();
     let lastY = window.scrollY;
     let direction = 0;
@@ -76,7 +77,7 @@ export function usePortfolioNavigation() {
       }
       const progress = Math.max(0, Math.min(1, y / pageDistance));
       const heroProgress = Math.max(0, Math.min(1, (y - heroTop) / morphDistance));
-      const morph = mobile.matches ? 1 : reduced.matches ? Number(heroProgress >= 1) : heroProgress;
+      const morph = narrow.matches ? 1 : reduced.matches ? Number(heroProgress >= 1) : heroProgress;
       header!.style.setProperty("--nav-morph", String(morph));
       header!.style.setProperty("--page-progress", String(progress));
       header!.dataset.compact = String(morph >= .95);
@@ -109,6 +110,7 @@ export function usePortfolioNavigation() {
     window.addEventListener("resize", resize);
     reduced.addEventListener("change", resize);
     mobile.addEventListener("change", resize);
+    narrow.addEventListener("change", resize);
     schedule();
 
     return () => {
@@ -120,6 +122,7 @@ export function usePortfolioNavigation() {
       window.removeEventListener("resize", resize);
       reduced.removeEventListener("change", resize);
       mobile.removeEventListener("change", resize);
+      narrow.removeEventListener("change", resize);
     };
   }, []);
 

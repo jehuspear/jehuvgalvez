@@ -18,6 +18,6 @@ export const heroStory = [
     id: "human-ai",
     label: "Human + AI",
     title: "Exploring what comes next.",
-    description: "Exploring ideas with ChatGPT, Codex, Gemini, and Antigravity. A creative vision of human thinking working with AI.",
+    description: "Continuing to learn, with AI assisting research, prototyping, debugging, and iteration. I stay responsible for system design, decisions, implementation, and validation.",
   },
 ] as const;
